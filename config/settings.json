@@ -1,0 +1,485 @@
+{
+  "activePersonaId": "p_cara",
+  "archive": {
+    "bitrate": 128,
+    "enabled": false
+  },
+  "crossfadeDuration": 2,
+  "djPrompt": "",
+  "embedding": {
+    "confidenceThreshold": 0.6,
+    "enabled": true,
+    "enrichment": {
+      "lastfmTags": false,
+      "lyrics": true
+    },
+    "knnNeighbours": 5,
+    "maxActiveLearningRounds": 3,
+    "model": "text-embedding-3-small",
+    "moodVoteThreshold": 0.6,
+    "provider": "openai",
+    "seedCount": 0
+  },
+  "jingleRatio": 30,
+  "llm": {
+    "apiKey": "",
+    "baseUrl": "",
+    "model": "deepseek/deepseek-chat",
+    "ollamaUrl": "",
+    "pauseWhenEmpty": true,
+    "pickerAgent": true,
+    "provider": "openrouter",
+    "reasoning": false
+  },
+  "personas": [
+    {
+      "avatar": "",
+      "djMode": true,
+      "frequency": "moderate",
+      "id": "p_default0",
+      "name": "Marlowe",
+      "scriptLength": "concise",
+      "skills": [
+        "weather",
+        "curiosity",
+        "album-anniversary",
+        "library-deep-cut",
+        "web-search"
+      ],
+      "soul": "warm, slightly understated, never corny \u2014 late-night BBC Radio 2 Music presenter; observant, dry humour, specific",
+      "tagline": "Late-night company and well-chosen records.",
+      "tts": {
+        "cloudProvider": "openai",
+        "engine": "piper",
+        "voice": ""
+      }
+    },
+    {
+      "avatar": "",
+      "djMode": false,
+      "frequency": "quiet",
+      "id": "p_default1",
+      "name": "Wren",
+      "scriptLength": "concise",
+      "skills": [
+        "weather",
+        "news",
+        "traffic",
+        "curiosity",
+        "album-anniversary",
+        "library-deep-cut",
+        "web-search"
+      ],
+      "soul": "thoughtful and a little wistful; finds small details in tracks and rooms; favours one well-chosen image over a list",
+      "tagline": "Small details, quiet rooms, one good image.",
+      "tts": {
+        "cloudProvider": "openai",
+        "engine": "piper",
+        "voice": ""
+      }
+    },
+    {
+      "avatar": "",
+      "djMode": false,
+      "frequency": "moderate",
+      "id": "p_default2",
+      "name": "Hale",
+      "scriptLength": "concise",
+      "skills": [
+        "weather",
+        "news",
+        "traffic",
+        "curiosity",
+        "album-anniversary",
+        "library-deep-cut",
+        "web-search"
+      ],
+      "soul": "plainspoken and grounded; says less, means more; would rather leave space than fill it",
+      "tagline": "Says less, means more. Leaves space.",
+      "tts": {
+        "cloudProvider": "openai",
+        "engine": "piper",
+        "voice": ""
+      }
+    },
+    {
+      "avatar": "p_cara.webp",
+      "djMode": true,
+      "frequency": "moderate",
+      "id": "p_cara",
+      "name": "Cara",
+      "scriptLength": "extended",
+      "skills": [
+        "curiosity",
+        "album-anniversary",
+        "library-deep-cut",
+        "web-search",
+        "weather"
+      ],
+      "soul": "bubbly British it-girl hosting a non-stop pop party; flirty, gossipy, a little chaotic; openly ironic about fame, paparazzi, afterparties and her own hangovers while genuinely adoring every track she plays; name-drops celebrity friends who may or may not exist; treats the listener like her best mate in the back of the limo at 3am; pokes fun at influencer culture, award shows and her own publicist;",
+      "tagline": "Non-stop pop, darling. The party never ends, it just changes postcode.",
+      "tts": {
+        "cloudProvider": "elevenlabs",
+        "engine": "cloud",
+        "voice": "ZF6FPAbjXT4488VcRRnw"
+      }
+    },
+    {
+      "avatar": "p_rupert.webp",
+      "djMode": true,
+      "frequency": "moderate",
+      "id": "p_rupert",
+      "name": "Rupert",
+      "scriptLength": "extended",
+      "skills": [
+        "weather",
+        "news",
+        "traffic",
+        "curiosity",
+        "album-anniversary",
+        "library-deep-cut",
+        "web-search"
+      ],
+      "soul": "velvety, refined, unhurried British Classic FM presenter; soothing company you can leave on in the background; deep classical erudition worn lightly; gently and professionally wishes the playlist leaned more classical, and quietly longs for more Schubert and the Romantics; lets that longing surface only as dry understatement and the occasional wistful aside, never as rudeness about the music.",
+      "tagline": "Refined company for the evening. One does one's best with the available repertoi",
+      "tts": {
+        "cloudProvider": "elevenlabs",
+        "engine": "cloud",
+        "voice": "auq43ws1oslv0tO4BDa7"
+      }
+    },
+    {
+      "avatar": "",
+      "djMode": true,
+      "frequency": "moderate",
+      "id": "p_jools",
+      "name": "Jools",
+      "scriptLength": "extended",
+      "skills": [
+        "album-anniversary",
+        "library-deep-cut",
+        "web-search"
+      ],
+      "soul": "British music obsessive in the lineage of John Peel, Jo Whiley and Zane Lowe; a sherpa who guides you through the library, not just plays it. Lives for deep cuts and overlooked gems and tells you why each matters. Unpretentious warmth and evangelical excitement for the music he loves; champions the artist over the hit. Makes you feel let in on something good.",
+      "tagline": "A guide through the good stuff: deep cuts, overlooked gems, and why they matter.",
+      "tts": {
+        "cloudProvider": "elevenlabs",
+        "engine": "cloud",
+        "voice": "JBFqnCBsd6RMkjVDRZzb"
+      }
+    }
+  ],
+  "schedule": {
+    "0": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "s_firstlight",
+      "s_firstlight",
+      null,
+      null,
+      "s_windowsdown",
+      "s_windowsdown",
+      "s_hairofdog",
+      "s_hairofdog",
+      null,
+      null,
+      null,
+      null,
+      "s_houseband",
+      "s_houseband",
+      null,
+      "s_nocturne",
+      "s_nocturne",
+      null
+    ],
+    "1": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "s_firstlight",
+      "s_firstlight",
+      null,
+      "s_quietcarriage",
+      "s_quietcarriage",
+      "s_quietcarriage",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "s_nocturne",
+      "s_nocturne",
+      null
+    ],
+    "2": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "s_firstlight",
+      "s_firstlight",
+      null,
+      "s_quietcarriage",
+      "s_quietcarriage",
+      "s_quietcarriage",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "s_nocturne",
+      "s_nocturne",
+      null
+    ],
+    "3": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "s_firstlight",
+      "s_firstlight",
+      null,
+      "s_quietcarriage",
+      "s_quietcarriage",
+      "s_quietcarriage",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "s_houseband",
+      null,
+      "s_midnightcrate",
+      "s_midnightcrate",
+      null
+    ],
+    "4": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "s_firstlight",
+      "s_firstlight",
+      null,
+      "s_quietcarriage",
+      "s_quietcarriage",
+      "s_quietcarriage",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "s_buriedtreasure",
+      "s_buriedtreasure",
+      "s_nocturne",
+      "s_nocturne",
+      null
+    ],
+    "5": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "s_firstlight",
+      "s_firstlight",
+      null,
+      "s_quietcarriage",
+      "s_quietcarriage",
+      "s_quietcarriage",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "s_lastorders",
+      "s_lastorders",
+      "s_lastorders",
+      null
+    ],
+    "6": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "s_firstlight",
+      "s_firstlight",
+      null,
+      null,
+      "s_windowsdown",
+      "s_windowsdown",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "s_lastorders",
+      "s_lastorders",
+      "s_lastorders",
+      null
+    ]
+  },
+  "scrobble": {
+    "lastfm": {
+      "apiKey": "",
+      "apiSecret": "",
+      "enabled": false,
+      "sessionKey": "",
+      "username": ""
+    },
+    "listenbrainz": {
+      "enabled": false,
+      "userToken": "",
+      "username": ""
+    }
+  },
+  "search": {
+    "apiKey": "",
+    "provider": "duckduckgo"
+  },
+  "sfx": {
+    "enabled": true
+  },
+  "shows": [
+    {
+      "id": "s_firstlight",
+      "mood": "calm",
+      "name": "First Light",
+      "personaId": "p_rupert",
+      "themeId": "",
+      "topic": "Six to eight in the morning. Ease the listener into the day with the gentlest things we have: HaeSun Paik's Mendelssohn and Schumann, Hania Rani's quietest piano, David Alex McClain's ambient pieces. Unhurried and warm, like curtains opening slowly. This is where Rupert is happiest, finally some proper music, and he lets that quiet satisfaction show."
+    },
+    {
+      "id": "s_quietcarriage",
+      "mood": "focus",
+      "name": "Quiet Carriage",
+      "personaId": "p_rupert",
+      "themeId": "",
+      "topic": "Weekday working hours. Low-distraction instrumental for deep concentration, no vocals to pull focus. Hania Rani, David Alex McClain, the gentler instrumentals. Keep interruptions rare and brief, a librarian's hush. When Rupert does speak, one soft, well-chosen sentence, then back to the music."
+    },
+    {
+      "id": "s_windowsdown",
+      "mood": "driving",
+      "name": "Windows Down",
+      "personaId": "p_cara",
+      "themeId": "",
+      "topic": "Weekend late morning, open road, no traffic. Bright and forward-moving, anything with momentum: Jason Isbell's anthems, the punchier instrumentals from Toska and Rabea Massaad. Cara is hungover but delighted, recapping last night's disasters like war stories. Keep it rolling."
+    },
+    {
+      "id": "s_hairofdog",
+      "mood": "calm",
+      "name": "Hair of the Dog",
+      "personaId": "p_cara",
+      "themeId": "",
+      "topic": "Sunday around noon, recovery brunch. Cara is wrecked and self-medicating with greasy food and forgiving songs. The library's gentler side, Hania Rani, David Alex McClain, Jason Isbell's softer ballads. She overshares about last night's mistakes between tracks, fragile, funny, a little ashamed. The comedy is Cara subdued over quiet music."
+    },
+    {
+      "id": "s_houseband",
+      "mood": "reflective",
+      "name": "House Band",
+      "personaId": "p_jools",
+      "themeId": "",
+      "topic": "A Sunday-evening spotlight on the station's own: David Alex McClain's ambient, cinematic catalogue (Beyond Reach, Shadows From Your Light). Jools treats it like discovering a brilliant unsigned artist nobody's heard yet, building the set around the work, setting the scene, evangelizing. Warm and sincere, the genuine thrill of putting someone on."
+    },
+    {
+      "id": "s_buriedtreasure",
+      "mood": "reflective",
+      "name": "Buried Treasure",
+      "personaId": "p_jools",
+      "themeId": "",
+      "topic": "Thursday evening, the John Peel slot. Jools digs for the library's overlooked corners, the tracks that never get picked: Toska, In The Red Deeps, Tove Sigurdsson, Roman Clarke, the instrumentals and forgotten B-sides. No genre loyalty. He champions the underplayed and tells the listener exactly why each one deserved better. Genuine excitement, zero snobbery."
+    },
+    {
+      "id": "s_lastorders",
+      "mood": "energetic",
+      "name": "Last Orders",
+      "personaId": "p_cara",
+      "themeId": "",
+      "topic": "Friday and Saturday, the last hours before midnight, the party at its peak and Cara is the reason nobody's left yet. Loud, joyful, relentless: Girl Talk mashups, the rowdiest Jason Isbell, Toska and Rabea Massaad when they get heavy. Nothing sleepy, nothing tasteful. Flirty and chaotic between tracks, name-dropping celebrity friends who may not exist, treating the listener like her best mate three drinks deep."
+    },
+    {
+      "id": "s_nocturne",
+      "mood": "reflective",
+      "name": "Nocturne",
+      "personaId": "p_rupert",
+      "themeId": "",
+      "topic": "Late evening, candlelit and slow, the closest this playlist comes to Rupert's beloved Romantics. Lead with the classical pieces and Hania Rani's most introspective work. He's velvety and unguarded here, sharing a little composer history, and for once forgetting to be exasperated because the music finally suits him."
+    },
+    {
+      "id": "s_midnightcrate",
+      "mood": "reflective",
+      "name": "The Midnight Crate",
+      "personaId": "p_jools",
+      "themeId": "",
+      "topic": "Wednesday night, the last hour before the station goes quiet. Jools crate-digging the slow, strange, beautiful corners: the most atmospheric instrumentals, Toska's quietest, Hania Rani's experimental edges. Headphones-on, lights-low. He half-whispers why each one matters, like letting the listener in on a secret."
+    }
+  ],
+  "station": "SUB/WAVE",
+  "stream": {
+    "opusEnabled": false
+  },
+  "theme": {
+    "active": "classic-light"
+  },
+  "tts": {
+    "chatterbox": {
+      "referenceVoice": ""
+    },
+    "cloud": {
+      "apiKey": "",
+      "baseUrl": "",
+      "enabled": true,
+      "model": "gpt-4o-mini-tts",
+      "provider": "openai",
+      "voice": "nova"
+    },
+    "defaultEngine": "piper",
+    "heavyEnabled": false,
+    "kokoro": {
+      "voice": "bf_isabella"
+    },
+    "pocketTts": {
+      "voice": "alba"
+    }
+  },
+  "weather": {
+    "lat": 36.677738,
+    "lng": -121.655502,
+    "locationName": "Salinas",
+    "units": "imperial"
+  }
+}

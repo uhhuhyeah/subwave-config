@@ -36,7 +36,7 @@
     {
       "avatar": "p_cara.webp",
       "djMode": true,
-      "frequency": "moderate",
+      "frequency": "quiet",
       "id": "p_cara",
       "name": "Cara",
       "scriptLength": "extended",
@@ -58,7 +58,7 @@
     {
       "avatar": "p_rupert.webp",
       "djMode": true,
-      "frequency": "moderate",
+      "frequency": "quiet",
       "id": "p_rupert",
       "name": "Rupert",
       "scriptLength": "extended",
@@ -82,7 +82,7 @@
     {
       "avatar": "p_jools.webp",
       "djMode": true,
-      "frequency": "moderate",
+      "frequency": "quiet",
       "id": "p_jools",
       "name": "Jools",
       "scriptLength": "extended",
@@ -102,7 +102,7 @@
     {
       "avatar": "p_sophie.webp",
       "djMode": true,
-      "frequency": "moderate",
+      "frequency": "quiet",
       "id": "p_sophie",
       "name": "Sophie",
       "scriptLength": "extended",

@@ -25,6 +25,7 @@
     "apiKey": "",
     "baseUrl": "",
     "model": "deepseek/deepseek-chat",
+    "numCtx": 16384,
     "ollamaUrl": "",
     "pauseWhenEmpty": true,
     "pickerAgent": true,
@@ -51,7 +52,7 @@
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
-        "voice": "jP5jSWhfXz3nfQENMtf4"
+        "voice": "ZF6FPAbjXT4488VcRRnw"
       }
     },
     {

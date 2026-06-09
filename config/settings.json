@@ -24,7 +24,7 @@
   "llm": {
     "apiKey": "",
     "baseUrl": "",
-    "model": "deepseek/deepseek-chat",
+    "model": "openai/gpt-oss-120b",
     "numCtx": 16384,
     "ollamaUrl": "",
     "pauseWhenEmpty": true,

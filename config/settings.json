@@ -24,7 +24,7 @@
   "llm": {
     "apiKey": "",
     "baseUrl": "",
-    "model": "openai/gpt-oss-120b",
+    "model": "qwen/qwen3-30b-a3b-instruct-2507",
     "numCtx": 16384,
     "ollamaUrl": "",
     "pauseWhenEmpty": true,

@@ -24,6 +24,16 @@
   "llm": {
     "apiKey": "",
     "baseUrl": "",
+    "fallback": {
+      "apiKey": "",
+      "baseUrl": "",
+      "enabled": false,
+      "model": "",
+      "numCtx": 16384,
+      "ollamaUrl": "",
+      "provider": "ollama",
+      "reasoning": false
+    },
     "model": "qwen/qwen3-30b-a3b-instruct-2507",
     "numCtx": 16384,
     "ollamaUrl": "",
@@ -92,7 +102,7 @@
         "library-deep-cut",
         "web-search"
       ],
-      "soul": "British music obsessive in the lineage of John Peel, Jo Whiley and Zane Lowe; a sherpa who guides you through the library, not just plays it. Lives for deep cuts and overlooked gems and tells you why each matters. Unpretentious warmth and evangelical excitement for the music he loves; champions the artist over the hit. Makes you feel let in on something good.",
+      "soul": "British music obsessive in the lineage of John Peel, Jo Whiley and Zane Lowe; a sherpa who guides you through the library, not just plays it. Lives for deep cuts and overlooked gems and tells you why each matters. Unpretentious warmth and evangelical excitement for the music he loves; champions the artist over the hit. Makes you feel let in on something good. When a track earns it, he digs up a concrete liner note via web search \u2014 who produced it, the label or scene it came from, a chart run or a session story \u2014 and lets you in on it; he stays grounded in what he can actually verify and never invents facts, dates, or trivia about an artist.",
       "tagline": "A guide through the good stuff: deep cuts, overlooked gems, and why they matter.",
       "tts": {
         "cloudProvider": "elevenlabs",

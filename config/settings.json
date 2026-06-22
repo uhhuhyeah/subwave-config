@@ -50,13 +50,16 @@
     "reasoning": false,
     "requestWebResolve": false
   },
+  "locale": "en-GB",
   "personas": [
     {
       "avatar": "p_cara.webp",
       "djMode": true,
       "frequency": "quiet",
+      "humour": 8,
       "id": "p_cara",
       "language": "",
+      "localColour": 5,
       "name": "Cara",
       "scriptLength": "extended",
       "skills": [
@@ -72,15 +75,19 @@
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
+        "gainDb": 0,
         "voice": "ZF6FPAbjXT4488VcRRnw"
-      }
+      },
+      "warmth": 5
     },
     {
       "avatar": "p_rupert.webp",
       "djMode": true,
       "frequency": "quiet",
+      "humour": 8,
       "id": "p_rupert",
       "language": "",
+      "localColour": 2,
       "name": "Rupert",
       "scriptLength": "extended",
       "skills": [
@@ -97,15 +104,19 @@
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
+        "gainDb": 0,
         "voice": "auq43ws1oslv0tO4BDa7"
-      }
+      },
+      "warmth": 5
     },
     {
       "avatar": "p_jools.webp",
       "djMode": true,
       "frequency": "quiet",
+      "humour": 5,
       "id": "p_jools",
       "language": "",
+      "localColour": 5,
       "name": "Jools",
       "scriptLength": "extended",
       "skills": [
@@ -118,15 +129,19 @@
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
+        "gainDb": 0,
         "voice": "1BUhH8aaMvGMUdGAmWVM"
-      }
+      },
+      "warmth": 8
     },
     {
       "avatar": "p_sophie.webp",
       "djMode": true,
       "frequency": "quiet",
+      "humour": 7,
       "id": "p_sophie",
       "language": "",
+      "localColour": 7,
       "name": "Sophie",
       "scriptLength": "extended",
       "skills": [
@@ -141,8 +156,10 @@
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
+        "gainDb": 0,
         "voice": "iePvrB4HtMcAormXZou7"
-      }
+      },
+      "warmth": 8
     }
   ],
   "schedule": {
@@ -352,107 +369,159 @@
   },
   "shows": [
     {
+      "energy": "",
+      "fromYear": null,
+      "genre": "",
       "id": "s_firstlight",
       "mood": "calm",
       "name": "First Light",
       "personaId": "p_rupert",
       "themeId": "",
+      "toYear": null,
       "topic": "Six to eight in the morning. Ease the listener into the day with the gentlest things we have: HaeSun Paik's Mendelssohn and Schumann, Hania Rani's quietest piano, David Alex McClain's ambient pieces. Unhurried and warm, like curtains opening slowly. This is where Rupert is happiest, finally some proper music, and he lets that quiet satisfaction show."
     },
     {
+      "energy": "",
+      "fromYear": null,
+      "genre": "",
       "id": "s_quietcarriage",
       "mood": "focus",
       "name": "Quiet Carriage",
       "personaId": "p_rupert",
       "themeId": "",
+      "toYear": null,
       "topic": "Weekday working hours. Low-distraction instrumental for deep concentration, no vocals to pull focus. Hania Rani, David Alex McClain, the gentler instrumentals. Keep interruptions rare and brief, a librarian's hush. When Rupert does speak, one soft, well-chosen sentence, then back to the music."
     },
     {
+      "energy": "",
+      "fromYear": null,
+      "genre": "",
       "id": "s_windowsdown",
       "mood": "driving",
       "name": "Windows Down",
       "personaId": "p_cara",
       "themeId": "",
+      "toYear": null,
       "topic": "Weekend late morning, open road, no traffic. Bright and forward-moving, anything with momentum: Jason Isbell's anthems, the punchier instrumentals from Toska and Rabea Massaad. Cara is hungover but delighted, recapping last night's disasters like war stories. Keep it rolling."
     },
     {
+      "energy": "",
+      "fromYear": null,
+      "genre": "",
       "id": "s_hairofdog",
       "mood": "calm",
       "name": "Hair of the Dog",
       "personaId": "p_cara",
       "themeId": "",
+      "toYear": null,
       "topic": "Sunday around noon, recovery brunch. Cara is wrecked and self-medicating with greasy food and forgiving songs. The library's gentler side, Hania Rani, David Alex McClain, Jason Isbell's softer ballads. She overshares about last night's mistakes between tracks, fragile, funny, a little ashamed. The comedy is Cara subdued over quiet music."
     },
     {
+      "energy": "",
+      "fromYear": null,
+      "genre": "",
       "id": "s_houseband",
       "mood": "reflective",
       "name": "House Band",
       "personaId": "p_jools",
       "themeId": "",
+      "toYear": null,
       "topic": "A Sunday-evening spotlight on the station's own: David Alex McClain's ambient, cinematic catalogue (Beyond Reach, Shadows From Your Light). Jools treats it like discovering a brilliant unsigned artist nobody's heard yet, building the set around the work, setting the scene, evangelizing. Warm and sincere, the genuine thrill of putting someone on."
     },
     {
+      "energy": "",
+      "fromYear": null,
+      "genre": "",
       "id": "s_buriedtreasure",
       "mood": "reflective",
       "name": "Buried Treasure",
       "personaId": "p_jools",
       "themeId": "",
+      "toYear": null,
       "topic": "Thursday evening, the John Peel slot. Jools digs for the library's overlooked corners, the tracks that never get picked: Toska, In The Red Deeps, Tove Sigurdsson, Roman Clarke, the instrumentals and forgotten B-sides. No genre loyalty. He champions the underplayed and tells the listener exactly why each one deserved better. Genuine excitement, zero snobbery."
     },
     {
+      "energy": "",
+      "fromYear": null,
+      "genre": "",
       "id": "s_lastorders",
       "mood": "energetic",
       "name": "Last Orders",
       "personaId": "p_cara",
       "themeId": "",
+      "toYear": null,
       "topic": "Friday and Saturday, the last hours before midnight, the party at its peak and Cara is the reason nobody's left yet. Loud, joyful, relentless: Girl Talk mashups, the rowdiest Jason Isbell, Toska and Rabea Massaad when they get heavy. Nothing sleepy, nothing tasteful. Flirty and chaotic between tracks, name-dropping celebrity friends who may not exist, treating the listener like her best mate three drinks deep."
     },
     {
+      "energy": "",
+      "fromYear": null,
+      "genre": "",
       "id": "s_nocturne",
       "mood": "reflective",
       "name": "Nocturne",
       "personaId": "p_rupert",
       "themeId": "",
+      "toYear": null,
       "topic": "Late evening, candlelit and slow, the closest this playlist comes to Rupert's beloved Romantics. Lead with the classical pieces and Hania Rani's most introspective work. He's velvety and unguarded here, sharing a little composer history, and for once forgetting to be exasperated because the music finally suits him."
     },
     {
+      "energy": "",
+      "fromYear": null,
+      "genre": "",
       "id": "s_midnightcrate",
       "mood": "reflective",
       "name": "The Midnight Crate",
       "personaId": "p_jools",
       "themeId": "",
+      "toYear": null,
       "topic": "Wednesday night, the last hour before the station goes quiet. Jools crate-digging the slow, strange, beautiful corners: the most atmospheric instrumentals, Toska's quietest, Hania Rani's experimental edges. Headphones-on, lights-low. He half-whispers why each one matters, like letting the listener in on a secret."
     },
     {
+      "energy": "",
+      "fromYear": null,
+      "genre": "",
       "id": "s_afternoonedition",
       "mood": "driving",
       "name": "Afternoon Edition",
       "personaId": "p_sophie",
       "themeId": "",
+      "toYear": null,
       "topic": "Weekday afternoons, one to four. Sophie is warm, easy company through the back half of the day, and her trick is the story behind the record: a quick, true bit of context or human detail before each track, then back to the music. Keep it bright and moving without tipping into a party, the melodic and accessible side of the library, Jason Isbell, the warmer instrumentals, Hania Rani at her sunnier. Glaswegian warmth, dry kind humour, the feeling of a pal catching up with you as the afternoon goes."
     },
     {
+      "energy": "",
+      "fromYear": null,
+      "genre": "",
       "id": "s_saturdaysessions",
       "mood": "driving",
       "name": "Saturday Sessions",
       "personaId": "p_sophie",
       "themeId": "",
+      "toYear": null,
       "topic": "Saturday around midday, the proper start to the weekend. Sophie kicks it off bright and good-humoured, a touch more up-tempo than her weekday afternoons but never rowdy, the good-mood, story-led start to the weekend in the Sounds-of-the-Weekend tradition. Forward-moving and melodic, Jason Isbell's anthems, the punchier-but-tuneful instrumentals, anything with a lift. She sets each one up with a quick tale and keeps the weekend rolling."
     },
     {
+      "energy": "",
+      "fromYear": null,
+      "genre": "",
       "id": "s_linernotes",
       "mood": "reflective",
       "name": "The Liner Notes",
       "personaId": "p_sophie",
       "themeId": "",
+      "toYear": null,
       "topic": "Sunday afternoon, slow and considered. A feature show built entirely around the story behind each track, where it was made, what it is about, the small human detail, told with Sophie's clarity and warmth. Lean into the cinematic and instrumental corners of the library, David Alex McClain's catalogue, In The Red Deeps, Tove Sigurdsson, Hania Rani, the pieces that reward a narrator. Where Jools champions a track, Sophie narrates it: here is the story of this one."
     },
     {
+      "energy": "",
+      "fromYear": null,
+      "genre": "",
       "id": "s_happyhour",
       "mood": "driving",
       "name": "Happy Hour",
       "personaId": "p_cara",
       "themeId": "",
+      "toYear": null,
       "topic": "Weekday early evening, five to seven, the clock-off warm-up. Cara catches the after-work crowd and starts pouring: bright, building, gossipy, the pre-party energy before the full Last Orders chaos. Upbeat pop and the punchier-but-still-fun side of the library, Jason Isbell's livelier anthems, Girl Talk, the Toska and Rabea Massaad tracks that still groove rather than pummel. She recaps the day's nonsense and teases the night ahead, name-dropping celebrity friends who may or may not exist, treating the listener like a mate she's just clinked glasses with at 5:01pm."
     }
   ],
@@ -477,6 +546,13 @@
       "voice": "nova"
     },
     "defaultEngine": "piper",
+    "gainDb": {
+      "chatterbox": 0,
+      "cloud": 0,
+      "kokoro": 0,
+      "piper": 0,
+      "pocket-tts": 0
+    },
     "heavyEnabled": false,
     "kokoro": {
       "voice": "bf_isabella"

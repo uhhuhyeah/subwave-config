@@ -41,7 +41,7 @@
       "provider": "ollama",
       "reasoning": false
     },
-    "model": "qwen/qwen3-30b-a3b-instruct-2507",
+    "model": "google/gemma-4-26b-a4b-it",
     "numCtx": 16384,
     "ollamaUrl": "",
     "pauseWhenEmpty": true,
@@ -129,7 +129,7 @@
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
-        "gainDb": 0,
+        "gainDb": 1,
         "voice": "1BUhH8aaMvGMUdGAmWVM"
       },
       "warmth": 8
@@ -156,7 +156,7 @@
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
-        "gainDb": 0,
+        "gainDb": 3,
         "voice": "iePvrB4HtMcAormXZou7"
       },
       "warmth": 8

@@ -74,9 +74,9 @@
       "tagline": "Non-stop pop, darling. The party never ends, it just changes postcode.",
       "tts": {
         "cloudProvider": "elevenlabs",
-        "engine": "pocket-tts",
+        "engine": "cloud",
         "gainDb": 0,
-        "voice": "alba"
+        "voice": "ZF6FPAbjXT4488VcRRnw"
       },
       "warmth": 5
     },
@@ -103,9 +103,9 @@
       "tagline": "Refined company for the evening. One does one's best with the available repertoi",
       "tts": {
         "cloudProvider": "elevenlabs",
-        "engine": "pocket-tts",
+        "engine": "cloud",
         "gainDb": 0,
-        "voice": "alba"
+        "voice": "auq43ws1oslv0tO4BDa7"
       },
       "warmth": 5
     },
@@ -128,9 +128,9 @@
       "tagline": "A guide through the good stuff: deep cuts, overlooked gems, and why they matter.",
       "tts": {
         "cloudProvider": "elevenlabs",
-        "engine": "pocket-tts",
+        "engine": "cloud",
         "gainDb": 1,
-        "voice": "alba"
+        "voice": "1BUhH8aaMvGMUdGAmWVM"
       },
       "warmth": 8
     },
@@ -155,9 +155,9 @@
       "tagline": "Good company and good stories to see the day through.",
       "tts": {
         "cloudProvider": "elevenlabs",
-        "engine": "pocket-tts",
+        "engine": "cloud",
         "gainDb": 3,
-        "voice": "alba"
+        "voice": "iePvrB4HtMcAormXZou7"
       },
       "warmth": 8
     }

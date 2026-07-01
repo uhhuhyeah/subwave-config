@@ -41,7 +41,7 @@
       "provider": "ollama",
       "reasoning": false
     },
-    "model": "google/gemma-4-26b-a4b-it",
+    "model": "qwen/qwen3-235b-a22b-2507",
     "numCtx": 16384,
     "ollamaUrl": "",
     "pauseWhenEmpty": true,

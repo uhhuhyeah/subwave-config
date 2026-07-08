@@ -33,24 +33,31 @@
   "festivals": [
     {
       "day": 1,
+      "description": "",
       "month": 1,
       "mood": "celebratory",
-      "name": "New Year's Day"
+      "name": "New Year's Day",
+      "windowDays": 0
     },
     {
       "day": 14,
+      "description": "",
       "month": 2,
       "mood": "romantic",
-      "name": "Valentine's Day"
+      "name": "Valentine's Day",
+      "windowDays": 0
     },
     {
       "day": 17,
+      "description": "",
       "month": 3,
       "mood": "celebratory",
-      "name": "St. Patrick's Day"
+      "name": "St. Patrick's Day",
+      "windowDays": 0
     },
     {
       "day": 13,
+      "description": "",
       "month": 4,
       "mood": "festival",
       "name": "Vaisakhi",
@@ -58,24 +65,31 @@
     },
     {
       "day": 1,
+      "description": "",
       "month": 5,
       "mood": "festival",
-      "name": "May Day"
+      "name": "May Day",
+      "windowDays": 0
     },
     {
       "day": 21,
+      "description": "",
       "month": 6,
       "mood": "celebratory",
-      "name": "Summer Solstice"
+      "name": "Summer Solstice",
+      "windowDays": 0
     },
     {
       "day": 31,
+      "description": "",
       "month": 10,
       "mood": "festival",
-      "name": "Halloween"
+      "name": "Halloween",
+      "windowDays": 0
     },
     {
       "day": 1,
+      "description": "",
       "month": 11,
       "mood": "festival",
       "name": "Diwali",
@@ -83,18 +97,23 @@
     },
     {
       "day": 5,
+      "description": "",
       "month": 11,
       "mood": "festival",
-      "name": "Bonfire Night"
+      "name": "Bonfire Night",
+      "windowDays": 0
     },
     {
       "day": 21,
+      "description": "",
       "month": 12,
       "mood": "reflective",
-      "name": "Winter Solstice"
+      "name": "Winter Solstice",
+      "windowDays": 0
     },
     {
       "day": 25,
+      "description": "",
       "month": 12,
       "mood": "celebratory",
       "name": "Christmas",
@@ -102,15 +121,27 @@
     },
     {
       "day": 26,
+      "description": "",
       "month": 12,
       "mood": "celebratory",
-      "name": "Boxing Day"
+      "name": "Boxing Day",
+      "windowDays": 0
     },
     {
       "day": 31,
+      "description": "",
       "month": 12,
       "mood": "celebratory",
-      "name": "New Year's Eve"
+      "name": "New Year's Eve",
+      "windowDays": 0
+    },
+    {
+      "day": 11,
+      "description": "San Jose's Obon Festival in Japantown is the largest in the US \u2014 a joyful Buddhist tradition honoring the departed, centered on a massive communal street dance open to everyone.",
+      "month": 7,
+      "mood": "festival",
+      "name": "San Jose Obon",
+      "windowDays": 1
     }
   ],
   "jingleRatio": 30,
@@ -136,7 +167,7 @@
     "keys": {},
     "maxOutputTokens": 0,
     "model": "qwen/qwen3-235b-a22b-2507",
-    "noRepeatWindow": 100,
+    "noRepeatWindow": 250,
     "numCtx": 16384,
     "ollamaUrl": "",
     "pauseWhenEmpty": true,
@@ -178,10 +209,10 @@
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
         "gainDb": 0,
-        "speed": 1,
+        "speed": 1.1,
         "voice": "ZF6FPAbjXT4488VcRRnw"
       },
-      "warmth": 5
+      "warmth": 6
     },
     {
       "avatar": "p_rupert.webp",
@@ -211,7 +242,7 @@
         "speed": 1,
         "voice": "auq43ws1oslv0tO4BDa7"
       },
-      "warmth": 5
+      "warmth": 8
     },
     {
       "avatar": "p_jools.webp",
@@ -261,7 +292,7 @@
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
-        "gainDb": 3,
+        "gainDb": 6,
         "speed": 1,
         "voice": "iePvrB4HtMcAormXZou7"
       },
@@ -629,7 +660,7 @@
       "excludedPlaylistIds": [],
       "filtersStrict": false,
       "fromYear": null,
-      "genre": "",
+      "genre": "Soundtrack",
       "guestPersonaIds": [],
       "id": "s_nocturne",
       "maxTrackSeconds": null,
@@ -775,7 +806,7 @@
   "stream": {
     "aacBitrate": 192,
     "aacEnabled": false,
-    "bitrate": 192,
+    "bitrate": 320,
     "flacEnabled": false,
     "opusBitrate": 96,
     "opusEnabled": false

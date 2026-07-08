@@ -264,7 +264,7 @@
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
-        "gainDb": 1,
+        "gainDb": 0,
         "speed": 1,
         "voice": "1BUhH8aaMvGMUdGAmWVM"
       },
@@ -292,7 +292,7 @@
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
-        "gainDb": 6,
+        "gainDb": 0,
         "speed": 1,
         "voice": "iePvrB4HtMcAormXZou7"
       },

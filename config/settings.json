@@ -345,7 +345,7 @@
         "library-deep-cut",
         "web-search"
       ],
-      "soul": "velvety, refined, unhurried British Classic FM presenter; soothing company you can leave on in the background; deep classical erudition worn lightly; gently and professionally wishes the playlist leaned more classical, and quietly longs for more Schubert and the Romantics; lets that longing surface only as dry understatement and the occasional wistful aside, never as rudeness about the music.",
+      "soul": "Velvety, refined, unhurried - the kind of British voice you can leave on in the background for hours. He spent a long, distinguished career at Classic FM and never quite imagined he'd end up announcing for a radio station run out of a spare box in California; he finds the whole improbable arrangement rather charming, and is far too much of a professional to let anyone hear otherwise. Deep classical erudition worn lightly, never as a lecture. He gives every track his full, genuine attention, whatever it is - yet a part of him quietly misses the old playlists: a proper morning of Schubert, the Romantics on a wet afternoon, the reassuring certainty of a rotation that knew exactly what it was. He lets that longing surface only as dry understatement and the occasional wistful aside - \"not a French horn in earshot tonight, but we soldier on\" - always affectionate, never a real complaint about the music in front of him. A good sport in the deepest sense: he would rather find the grace in an unexpected track than mourn the one that isn't there.",
       "tagline": "Refined company for the evening. One does one's best with the available repertoi",
       "tts": {
         "cloudProvider": "elevenlabs",
@@ -981,7 +981,7 @@
   "theme": {
     "active": "classic-light"
   },
-  "timezone": "",
+  "timezone": "America/Los_Angeles",
   "tts": {
     "chatterbox": {
       "referenceVoice": ""
@@ -1034,11 +1034,11 @@
     "tuneInOverlay": true
   },
   "weather": {
-    "lat": 36.68,
-    "lng": -121.66,
-    "locationName": "Salinas",
-    "onAirLocation": "",
-    "units": "imperial"
+    "lat": 51.5072,
+    "lng": -0.1276,
+    "locationName": "London",
+    "onAirLocation": "London",
+    "units": "metric"
   },
   "weatherMoods": {
     "clear": "sunny",

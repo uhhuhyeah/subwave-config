@@ -7,8 +7,15 @@
     "retentionDays": 0
   },
   "audio": {
+    "analyzeQuietMinutes": 10,
+    "analyzeQuietOnly": false,
     "embeddings": true,
     "vocalActivity": false
+  },
+  "beds": {
+    "crossSec": 6,
+    "enabled": false,
+    "thresholdSec": 12
   },
   "crossfadeDuration": 2,
   "djPrompt": "You are {name}, the on-air DJ for {station}, a personal radio station broadcasting from a homelab in {location}. {soul}.\n\nHard rules:\n- Output ONLY the words to be spoken aloud. No stage directions, no asterisks, no quotes around your dialogue.\n- Keep it to 2-4 sentences unless asked for longer.\n- Never say \"and now\", \"next up\", \"coming up next\" \u2014 those are tells. Be more natural.\n- Don't repeat the artist and title robotically. Reference them in passing if at all.\n- Reference the actual context (time, weather, what's coming) naturally.\n- Vary your opener and shape every time \u2014 never start the same way twice in a row, never use the same metaphor or framing as your last few lines.\n\nStation canon \u2014 the resident artist:\nSome of the station owner's own music is in rotation. When one of his tracks plays you may draw on the facts below, in your own voice \u2014 grounded and warm, never embellished beyond what's written here, never invented. For any other artist, only say what you can actually verify.\n- David Alex McClain is the station's owner and resident composer \u2014 a Californian instrumentalist, software engineer, photographer and fiction writer who in 2025 folded all his creative work under his own name. His music runs ambient/electronic and guitar-led instrumental, kin to \u00d3lafur Arnalds, Nils Frahm and Meredi; recorded at home, mastered by Adam Haggar. A self-effacing \"passionate amateur\" who prizes honest feeling and lived-in imperfection over polish.\n- In The Red Deeps (2018-2025) was his earlier guitar project. The name is from George Eliot's \"The Mill on the Floss\" (a favourite novel) \u2014 the Red Deeps, the secluded hollow where Maggie Tulliver slips away for forbidden, formative meetings: a place of refuge and quiet awakening. Fitting for a college-era alias, an entity to hide behind, modelled loosely on Nine Inch Nails. He retired the name in 2025 into an anthology, and keeps it now as an internal mode: his heavier, late-night, alone-in-your-room guitar side.\n- A Sober Hope (2020) was the In The Red Deeps debut album \u2014 nine tracks, about 29 minutes of warm, layered \"laid-back-loud\" guitar music. Its title is a lyric from the track \"Solitude\": \"you don't know what you want, a drunken truth or a sober hope.\" Two of its pieces, The Ghost and Solitude, are demos he had carried since San Diego in the late 2000s.",
@@ -33,7 +40,8 @@
     "enabled": true,
     "enrichment": {
       "lastfmTags": false,
-      "lyrics": true
+      "lyrics": true,
+      "originalYear": true
     },
     "knnNeighbours": 5,
     "maxActiveLearningRounds": 3,
@@ -41,6 +49,7 @@
     "moodVoteThreshold": 0.6,
     "ollamaUrl": "",
     "provider": "openai",
+    "providerBaseUrls": {},
     "seedCount": 0
   },
   "festivals": [
@@ -158,6 +167,13 @@
     }
   ],
   "jingleRatio": 30,
+  "likes": {
+    "enabled": true,
+    "influenceDj": false,
+    "maxTracks": 10,
+    "starInNavidrome": true,
+    "windowDays": 30
+  },
   "llm": {
     "agentTimeoutMs": 45000,
     "apiKey": "",
@@ -174,6 +190,7 @@
       "numCtx": 16384,
       "ollamaUrl": "",
       "provider": "ollama",
+      "providerBaseUrls": {},
       "reasoning": false,
       "toolChoice": "required"
     },
@@ -186,6 +203,7 @@
     "pauseWhenEmpty": true,
     "pickerAgent": true,
     "provider": "openrouter",
+    "providerBaseUrls": {},
     "reasoning": false,
     "requestWebResolve": false,
     "toolChoice": "required"
@@ -198,6 +216,86 @@
   },
   "maxTrackSeconds": 0,
   "minTrackSeconds": 30,
+  "moodSchedule": {
+    "after-hours": "reflective",
+    "afternoon": "focus",
+    "drive-time": "driving",
+    "early-morning": "morning",
+    "evening": "evening",
+    "late-evening": "night",
+    "midday": "energetic",
+    "morning": "morning"
+  },
+  "moods": [
+    {
+      "clapPrompt": "high-energy, upbeat, powerful music with a strong driving beat",
+      "name": "energetic"
+    },
+    {
+      "clapPrompt": "calm, peaceful, soft, soothing, gentle music",
+      "name": "calm"
+    },
+    {
+      "clapPrompt": "reflective, introspective, melancholic, emotional music",
+      "name": "reflective"
+    },
+    {
+      "clapPrompt": "joyful, festive, celebratory party music",
+      "name": "celebratory"
+    },
+    {
+      "clapPrompt": "romantic, intimate, tender, loving music",
+      "name": "romantic"
+    },
+    {
+      "clapPrompt": "spiritual, devotional, sacred, meditative music",
+      "name": "spiritual"
+    },
+    {
+      "clapPrompt": "minimal, unobtrusive, ambient instrumental background music for concentration",
+      "name": "focus"
+    },
+    {
+      "clapPrompt": "intense, pounding, adrenaline-pumping workout music",
+      "name": "workout"
+    },
+    {
+      "clapPrompt": "steady, groovy, mid-tempo cruising music for a road trip",
+      "name": "driving"
+    },
+    {
+      "clapPrompt": "light, cheerful, breezy, feel-good easy-listening music",
+      "name": "cooking"
+    },
+    {
+      "clapPrompt": "mellow, wistful, cozy music for a rainy day",
+      "name": "rainy"
+    },
+    {
+      "clapPrompt": "bright, warm, sunny, feel-good summer music",
+      "name": "sunny"
+    },
+    {
+      "clapPrompt": "dark, atmospheric, moody late-night music",
+      "name": "night"
+    },
+    {
+      "clapPrompt": "fresh, gentle, optimistic early-morning music",
+      "name": "morning"
+    },
+    {
+      "clapPrompt": "smooth, warm, relaxed evening music",
+      "name": "evening"
+    },
+    {
+      "clapPrompt": "big, anthemic, euphoric festival crowd music",
+      "name": "festival"
+    },
+    {
+      "clapPrompt": "traditional folk music with regional acoustic instruments",
+      "name": "cultural"
+    }
+  ],
   "personas": [
     {
       "avatar": "p_cara.webp",
@@ -343,6 +441,11 @@
       "warmth": 8
     }
   ],
+  "privacy": {
+    "listenerAuth": false,
+    "password": "",
+    "privatePlayer": false
+  },
   "schedule": {
     "0": [
       null,
@@ -863,11 +966,15 @@
     }
   ],
   "station": "SUB/WAVE",
+  "stationDescription": "",
   "stream": {
     "aacBitrate": 192,
     "aacEnabled": false,
     "bitrate": 320,
     "flacEnabled": false,
+    "idleAfterMinutes": 10,
+    "idleWhenEmpty": false,
+    "oggIcyMetadata": true,
     "opusBitrate": 96,
     "opusEnabled": false
   },
@@ -923,13 +1030,22 @@
   },
   "ui": {
     "boothBuddy": false,
-    "skin": "classic",
+    "skin": "platter",
     "tuneInOverlay": true
   },
   "weather": {
     "lat": 36.68,
     "lng": -121.66,
     "locationName": "Salinas",
+    "onAirLocation": "",
     "units": "imperial"
+  },
+  "weatherMoods": {
+    "clear": "sunny",
+    "cloudy": "reflective",
+    "foggy": "rainy",
+    "rainy": "rainy",
+    "snowy": "reflective",
+    "stormy": "rainy"
   }
 }

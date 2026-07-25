@@ -1050,7 +1050,9 @@
       "moods": [],
       "name": "Lunchtime Concert",
       "personaId": "p_rupert",
-      "playlistIds": [],
+      "playlistIds": [
+        "mdWYFg3otxXptXmuO02ojl"
+      ],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",

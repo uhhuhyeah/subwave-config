@@ -587,9 +587,9 @@
       "s_firstlight",
       "s_firstlight",
       null,
-      "s_quietcarriage",
-      "s_quietcarriage",
-      "s_quietcarriage",
+      "s_carasearly",
+      "s_carasearly",
+      "s_carasearly",
       null,
       "s_afternoonedition",
       "s_afternoonedition",
@@ -919,6 +919,30 @@
       "segmentSkill": "",
       "themeId": "",
       "topic": "Sunday afternoon, slow and considered. A feature show built around where each track lives - the place it was made, the landscape it suits, the room it belongs in - told with Hannah's warmth and her two-cities ear. Lean into the cinematic and instrumental corners of the library: David Alex McClain's catalogue, In The Red Deeps, Tove Sigurdsson, Hania Rani, the pieces that reward a narrator. Where Jools champions a track, Hannah places it: here is where this one belongs."
+    },
+    {
+      "banter": true,
+      "energies": [],
+      "eras": [],
+      "excludedPlaylistIds": [],
+      "filtersStrict": false,
+      "genres": [],
+      "guestPersonaIds": [
+        "p_cara"
+      ],
+      "id": "s_carasearly",
+      "maxTrackSeconds": null,
+      "moods": [
+        "driving"
+      ],
+      "name": "Cara's Early",
+      "personaId": "p_hannah",
+      "playlistIds": [],
+      "playlistStrict": false,
+      "programme": false,
+      "segmentSkill": "",
+      "themeId": "",
+      "topic": "Friday, nine to noon. Officially Hannah's easy morning company into the weekend; unofficially, Cara has turned up hours before her own Happy Hour shift, commandeered the second mic, and won't be moved. Hannah keeps steering back to the warm, melodic morning she planned; Cara keeps dragging it toward Saturday night. The show is that affectionate tug-of-war - let it play out differently each week rather than running the same gag: some mornings Hannah holds the calm, some mornings Cara's energy wins, mostly it's a negotiation between the two. Bright, upbeat pop and the tuneful side of the library, lifting as noon nears without becoming a full party this early. Hannah hosts and keeps the thread; Cara is the chaos who refuses to wait for Happy Hour. Never invent quotes for each other - only riff on what was actually said on air."
     },
     {
       "banter": false,

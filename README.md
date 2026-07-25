@@ -51,6 +51,17 @@ A read-only health sweep — the homelab analogue of the upstream `subwave docto
 
 It checks, in order: **Host** (ssh + `pct exec` reachable, docker daemon up), **Compose** (stack up, per-service state), **Controller** (`/api/health` on-air, `/api/now-playing` stream + listeners, onboarding/setup complete, admin creds accepted), **Icecast** (`/stream.mp3` serving `audio/mpeg`), **State** (state dir + `voice/jingles/sessions/logs/archive` writable), **Content** (`auto.m3u` + `jingles.m3u` populated, jingle files present), **Logs** (`radio.log` tail scanned for error-shaped lines). Makes no changes. Run it after an upgrade or whenever something looks off. Targets are overridable via `.env` (`PVE_SSH` / `SUBWAVE_CTID` / `SUBWAVE_STACK_DIR` / `SUBWAVE_URL`).
 
+## Schedule (`schedule.sh`)
+
+```bash
+./schedule.sh            # weekly grid + per-persona hours + open slots (from the local config)
+./schedule.sh --pull     # pull live config first, then render
+./schedule.sh -p Hannah  # highlight one persona + list the empty hours adjacent to their shows
+./schedule.sh --gaps     # just the open-slots summary
+```
+
+A read-only view of `config/settings.json`'s `schedule` — the 24h × 7d grid (host initial + show name), per-persona hour totals with each persona's shows, and the open slots as contiguous runs. It reads the **local mirror** by default (fast, offline); `--pull` refreshes from the API first. Hours are shown in the station's own `timezone` (printed in the header) — the same clock the scheduler keys off, so what you see is what airs. `-p <name>` bolds a persona's cells and adds a **candidate-extensions** list: the empty hour immediately before/after each of their blocks — the "where could this DJ naturally grow" finder. Colour auto-disables when piped or under `NO_COLOR`.
+
 ## Reaching the LXC
 
 `SUBWAVE_URL=http://192.168.1.18:7700` works on the Brookgrass LAN and from any Tailscale device (pve01 subnet-routes `192.168.1.0/24`). The `/api/*` prefix is stripped by Caddy and proxied to the controller (`:7701`).

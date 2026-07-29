@@ -73,6 +73,32 @@ if [ -z "$ps" ]; then echo "R|stack|down"; else
   while IFS='|' read -r svc state; do [ -n "$svc" ] && echo "R|svc|${svc}|${state}"; done <<< "$ps"
 fi
 
+# Acoustic-analysis backend, probed FROM THE CONTROLLER (the only view that
+# matters — the controller is what calls it). This check exists because upstream
+# moved analysis out of tts-heavy into a standalone `analyzer` service in v0.34.0
+# and this stack silently ran without any backend for three weeks: "service
+# running" was green the whole time because the service simply wasn't defined,
+# and the controller degrades to NULL analysis without erroring. So assert
+# reachability AND the CLAP capability, not just that a container exists.
+if ! docker compose ps --services 2>/dev/null | grep -qx analyzer; then
+  echo "R|analyzer|fail|no 'analyzer' service in docker-compose.yml|Acoustic analysis has NO backend. Port the analyzer service from the upstream compose (subwave-config/deploy)."
+else
+  # </dev/null is REQUIRED: this whole script is fed to `bash -s` over ssh via a
+  # heredoc, and `docker compose exec -T` reads stdin — without this it swallows
+  # the remaining script and every later check silently vanishes (22 ok -> 14 ok).
+  # Same stdin-consumption class as the 2026-06-04 push.sh bug.
+  ah=$(docker compose exec -T controller sh -c 'curl -s -m 8 http://analyzer:8080/health' 2>/dev/null </dev/null)
+  if [ -z "$ah" ]; then
+    echo "R|analyzer|fail|unreachable from controller|Service defined but not answering — docker compose logs analyzer"
+  else
+    aud=$(printf '%s' "$ah" | grep -o '"analyze_audio_capable":[^,}]*' | cut -d: -f2)
+    case "$aud" in
+      *true*) echo "R|analyzer|ok|reachable · CLAP audio-capable" ;;
+      *)      echo "R|analyzer|warn|reachable but NOT CLAP-capable (lean flavour?)|Set ANALYZER_HEAVY=1 in .env for subwave-analyzer-heavy, then recreate." ;;
+    esac
+  fi
+fi
+
 # state dir + required subdirs (mirror CLI: voice jingles sessions logs archive)
 if [ ! -d state ]; then echo "R|state|fail|missing"
 elif [ ! -w state ]; then echo "R|state|fail|not writable"
@@ -155,6 +181,13 @@ else
       *) finding fail "service · ${svc}" "$state" "docker compose logs ${svc}" ;;
     esac
   done < <(printf '%s\n' "$REMOTE" | grep '^R|svc|')
+
+  # Acoustic-analysis backend (see the remote probe for why this is its own check)
+  if printf '%s\n' "$REMOTE" | grep -q '^R|analyzer|'; then
+    while IFS='|' read -r _ _ st detail hint; do
+      finding "$st" "analyzer · acoustic analysis" "$detail" "$hint"
+    done < <(printf '%s\n' "$REMOTE" | grep '^R|analyzer|')
+  fi
 fi
 
 # --- Controller (live API over the tailnet) -------------------------------

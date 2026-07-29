@@ -40,6 +40,24 @@ Avatar *images* aren't part of `/api/settings`, so `push.sh`/`pull.sh` don't tou
 
 Gotcha: uploading art via **admin → Personas** also sets the persona's `avatar` field in the *live* `settings.json`. After a UI upload, run **both** `./avatars-pull.sh` (grab the image) **and** `./pull.sh` (grab the field) before any later `./push.sh`, or the push will blank the `avatar` field. Override the target with `PVE_SSH` / `SUBWAVE_CTID` / `SUBWAVE_AVATAR_DIR` in `.env` if the host or container id ever changes.
 
+## Deployment / compose (`deploy/docker-compose.yml`)
+
+The stack file itself (`/opt/subwave/docker-compose.yml`) used to be hand-edited on the LXC and tracked nowhere. Because upgrades here are **image-first** — bump `SUBWAVE_VERSION` in the LXC `.env`, pull, `up -d` — the compose file never moved, so when upstream **split the acoustic analyzer out of `tts-heavy` into its own `analyzer` service (v0.34.0)**, this stack silently lost its analysis backend and nothing noticed for three weeks. Tracking the file turns that class of drift into a reviewable `git diff`.
+
+```bash
+./compose-pull.sh   # fetch the live compose -> deploy/ (shows drift), then commit
+./compose-push.sh   # deploy/ -> the LXC, then recreate containers
+```
+
+**The tracked copy is deliberately byte-identical to the upstream release's `docker-compose.yml`** (currently v1.2.0 — verify with `git -C ~/code/subwave show v1.2.0:docker-compose.yml | diff - deploy/docker-compose.yml`). All local configuration lives in the LXC's `.env`, which this repo does not track because it holds secrets. Keeping zero drift is the point: reconciling against a new release stays a clean diff instead of a merge.
+
+Notes:
+
+- `compose-push.sh` **recreates containers**, so the Icecast stream drops for ~30–60s. It diffs, confirms, backs up (`docker-compose.yml.bak-<stamp>`), validates with `docker compose config`, and restores the backup automatically if validation fails.
+- **`tts-heavy` is deliberately not enabled.** It is profile-gated upstream (`profiles: ["tts-heavy"]`) and existed on this station only to host the CLAP analyzer. Every persona uses cloud (ElevenLabs) TTS and `tts.heavyEnabled` is `false`, so its Chatterbox/PocketTTS engines were dead weight — it was holding ~6 GiB resident. Bring it back with `PROFILES="tts-heavy" ./compose-push.sh`.
+- **`--remove-orphans` will not remove a profile-gated service you left out.** `tts-heavy` is still *defined* in the file, so compose treats it as known rather than orphaned. To actually take it down: `docker compose --profile tts-heavy rm -sf tts-heavy`.
+- The analyzer flavour is chosen by **`ANALYZER_HEAVY=1`** in the LXC `.env` — that selects `subwave-analyzer-heavy` (CLAP "sounds-like" + Demucs). Unset gives the lean librosa-only image, which would leave sonic journeys without embeddings. `doctor.sh` asserts the CLAP capability specifically, not just that a container is running.
+
 ## Health check (`doctor.sh`)
 
 ```bash

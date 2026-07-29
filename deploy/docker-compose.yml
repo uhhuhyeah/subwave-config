@@ -1,0 +1,389 @@
+# SUB/WAVE — production orchestration.
+# Only Caddy is exposed on the host. Cloudflare terminates TLS in front.
+# Broadcast (icecast2 + liquidsoap), Controller, and Web are all internal-only
+# and reachable via Caddy's reverse proxy under one origin (/api, /stream.mp3, /).
+#
+# Image-first: every service pulls its baked image from GHCR by default. The
+# build: blocks let `docker compose build` rebuild locally from a checkout,
+# but the standard install never needs to clone — operators just need this
+# file and a 3-line .env to boot.
+#
+# State persists in <repo>/state by default (override with STATE_DIR). It is a
+# bind mount, so `docker compose down -v` (named-volume wipe) won't touch it —
+# but it lives inside the project dir, so keep it clear of `git clean -dffx`.
+
+x-state: &state-mount ${STATE_DIR:-./state}:/var/sub-wave
+
+# Cap container log growth. Without this the default json-file driver keeps an
+# unbounded log per container, which on a long-running station eventually fills
+# the host disk. 10m × 3 files = ~30MB ceiling per service. Applied to every
+# service below via `logging: *default-logging`.
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  # -------------------------------------------------------------------------
+  # CADDY — public edge, the only service bound to a host port
+  # -------------------------------------------------------------------------
+  caddy:
+    image: ghcr.io/perminder-klair/subwave-caddy:${SUBWAVE_VERSION:-latest}
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.caddy
+    container_name: sub-wave-caddy
+    restart: unless-stopped
+    logging: *default-logging
+    depends_on:
+      # web has no healthcheck (static Next.js server) — started is enough.
+      # controller + broadcast expose one, so gate the edge on them being
+      # healthy so Caddy doesn't 502 the first requests after a cold `up -d`.
+      web:
+        condition: service_started
+      controller:
+        condition: service_healthy
+      broadcast:
+        condition: service_healthy
+    ports:
+      - "${CADDY_PORT:-7700}:80"
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+
+  # -------------------------------------------------------------------------
+  # BROADCAST — icecast2 endpoint + liquidsoap mixer in one container
+  # -------------------------------------------------------------------------
+  # The supervisor entrypoint resolves ICECAST_*_PASSWORD on first boot
+  # (writing them to state/icecast-secrets.env for visibility), then launches
+  # icecast2 and liquidsoap together. If either process dies the container
+  # exits and compose restarts the pair as a unit.
+  broadcast:
+    image: ghcr.io/perminder-klair/subwave-broadcast:${SUBWAVE_VERSION:-latest}
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.broadcast
+    container_name: sub-wave-broadcast
+    restart: unless-stopped
+    logging: *default-logging
+    environment:
+      # All three are optional — leave blank in .env and the image generates
+      # random values on first boot, persisting them to state/icecast-secrets.env.
+      # To rotate: delete that file and restart broadcast + controller (the
+      # controller doesn't actually source the file, but a settings reload
+      # picks up any URL change cleanly).
+      - ICECAST_SOURCE_PASSWORD=${ICECAST_SOURCE_PASSWORD:-}
+      - ICECAST_ADMIN_PASSWORD=${ICECAST_ADMIN_PASSWORD:-}
+      - ICECAST_RELAY_PASSWORD=${ICECAST_RELAY_PASSWORD:-}
+      # Concurrent-listener ceiling for icecast (<limits><clients>).
+      # Empty/unset → 100 (the historical default).
+      - ICECAST_MAX_CLIENTS=${ICECAST_MAX_CLIENTS:-}
+      # Reverse proxies whose X-Forwarded-For icecast should believe, so admin
+      # → Listeners shows real listener IPs rather than the edge's container
+      # address. Unset resolves the bundled `caddy` by name at render time,
+      # which lands on every restart but misses the very first cold boot (caddy
+      # can't be running yet — it waits on this service's healthcheck). Set
+      # ICECAST_TRUSTED_PROXY_IPS to a pinned address for first-boot accuracy.
+      - ICECAST_TRUSTED_PROXY_IPS=${ICECAST_TRUSTED_PROXY_IPS:-}
+      - ICECAST_TRUSTED_PROXY_HOSTS=${ICECAST_TRUSTED_PROXY_HOSTS:-}
+      # Keeps the hourly archive paths (%Y-%m-%d/%H-00.mp3) on local wall time.
+      - TZ=${TZ:-Europe/London}
+    extra_hosts:
+      # Lets Liquidsoap fetch Subsonic stream URLs that point at host services
+      # (e.g. NAVIDROME_URL=http://host.docker.internal:4533) without leaking
+      # the lookup to public DNS.
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - *state-mount
+      - ${STATE_DIR:-./state}/logs:/var/log/liquidsoap
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:7702/status-json.xsl > /dev/null"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 15s
+
+  # -------------------------------------------------------------------------
+  # CONTROLLER — AI DJ brain
+  # -------------------------------------------------------------------------
+  controller:
+    image: ghcr.io/perminder-klair/subwave-controller:${SUBWAVE_VERSION:-latest}
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.controller
+      args:
+        # Version reported by the controller (backup manifest). Same source as
+        # the web build arg below; unset → falls back to controller/package.json.
+        - SUBWAVE_BUILD_VERSION=${SUBWAVE_BUILD_VERSION:-}
+    container_name: sub-wave-controller
+    restart: unless-stopped
+    logging: *default-logging
+    depends_on:
+      broadcast:
+        condition: service_healthy
+      # Bring the socket-proxy up whenever the controller is (re)created — even a
+      # selective `up -d controller` — so the Stats system panel works without a
+      # separate full `up -d`. Remove this entry too if you drop the proxy below.
+      docker-socket-proxy:
+        condition: service_started
+    environment:
+      # Enables the production-only admin gate: refuses to boot unless
+      # ADMIN_USER + ADMIN_PASS are set in .env.
+      - NODE_ENV=production
+      # Schedule slots are stored by day-of-week + hour; resolveActiveShow()
+      # reads them with date.getHours(). Without TZ the container runs in UTC
+      # and fires shows an hour early during BST.
+      - TZ=${TZ:-Europe/London}
+      # In-container path of the *state-mount below.
+      - STATE_DIR=/var/sub-wave
+      # In-container path of the sounds COPY'd into the image at build time.
+      - SOUNDS_DIR=/sounds
+      # Optional sidecar for Chatterbox + PocketTTS. The tts-heavy service
+      # below is gated by `--profile tts-heavy`; when off, the URL is
+      # unreachable and audio/chatterbox.ts + audio/pocketTts.ts silently
+      # fall back to Piper (same behaviour as the default image today).
+      - TTS_HEAVY_URL=${TTS_HEAVY_URL:-http://tts-heavy:8080}
+      # Acoustic-analysis sidecar (the `analyzer` service below, default-on).
+      # The controller probes this, then a local venv — falling through cleanly
+      # to NULL analysis if neither is reachable. (tts-heavy is TTS-only; it no
+      # longer carries the analyzer.) See music/analyzer.ts.
+      - ANALYZE_URL=${ANALYZE_URL:-http://analyzer:8080}
+      # Per-container CPU/memory for the admin Stats page (GET /system) is read
+      # from the docker-socket-proxy sidecar over TCP — the controller never
+      # touches the raw Docker socket. Unset this to disable the panel.
+      - DOCKER_HOST=tcp://docker-socket-proxy:2375
+    env_file:
+      # All controller config (Navidrome creds, LLM keys, ADMIN_*, etc.) lives
+      # in the root .env. Vars not set are simply absent — settings.json takes
+      # over for everything the first-run wizard manages.
+      - ./.env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - *state-mount
+    # curl is present in the controller image (see docker/Dockerfile.controller).
+    # /health is served at the router root on :7701 (routes/public.ts). Lets web
+    # + caddy gate on the controller being ready via depends_on: service_healthy.
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:7701/health > /dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
+
+  # -------------------------------------------------------------------------
+  # DOCKER-SOCKET-PROXY — locked-down Docker API for the Stats system panel
+  # -------------------------------------------------------------------------
+  # Owns the real /var/run/docker.sock and exposes a read-only, GET-only slice
+  # of the Docker Engine API over TCP (CONTAINERS section only; POST and every
+  # other section refused by default). The controller reads per-container
+  # CPU/memory through it via DOCKER_HOST=tcp://docker-socket-proxy:2375, so the
+  # controller image itself never holds the socket. No host port — only
+  # reachable on the internal compose network. Optional: remove this service
+  # (plus the controller's DOCKER_HOST and its docker-socket-proxy depends_on
+  # entry above) to drop the Stats system panel.
+  docker-socket-proxy:
+    image: ghcr.io/tecnativa/docker-socket-proxy:0.3.0
+    container_name: sub-wave-docker-proxy
+    restart: unless-stopped
+    logging: *default-logging
+    environment:
+      - CONTAINERS=1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  # -------------------------------------------------------------------------
+  # WEB — Next.js listener UI
+  # -------------------------------------------------------------------------
+  web:
+    image: ghcr.io/perminder-klair/subwave-web:${SUBWAVE_VERSION:-latest}
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+      args:
+        # Belt-and-suspenders for source builds only — every route that emits
+        # absolute URLs renders per-request off the RUNTIME env below.
+        - SITE_URL=${SITE_URL:-}
+        # NEXT_PUBLIC_* is inlined into the client bundle at BUILD time.
+        - NEXT_PUBLIC_GA_ID=${NEXT_PUBLIC_GA_ID:-}
+        # Version shown in the admin console footer, inlined at BUILD time.
+        # scripts/update.sh sets it from `git describe`; unset → falls back to
+        # web/package.json (see web/next.config.js).
+        - SUBWAVE_BUILD_VERSION=${SUBWAVE_BUILD_VERSION:-}
+    container_name: sub-wave-web
+    restart: unless-stopped
+    logging: *default-logging
+    depends_on:
+      # Wait for the controller to pass its healthcheck — the homepage renders
+      # per-request against the controller (CONTROLLER_INTERNAL_URL below), so
+      # starting web before the controller is ready serves broken first pages.
+      controller:
+        condition: service_healthy
+    environment:
+      - NODE_ENV=production
+      - SUBWAVE_HOMEPAGE=${SUBWAVE_HOMEPAGE:-player}
+      # The RUNTIME source of truth for absolute URLs: canonicals, og:url,
+      # robots.txt, and sitemap.xml all render per-request from this env, so
+      # the generic published image serves the operator's real domain. Define
+      # SITE_URL once in .env.
+      - SITE_URL=${SITE_URL:-}
+      # Google Analytics Measurement ID at RUNTIME (web/lib/ga.ts). Plumbs the
+      # operator's NEXT_PUBLIC_GA_ID from .env into a runtime var, so analytics
+      # turn on with a `web` recreate — no image rebuild. The build-arg above
+      # still bakes it for images built with a value.
+      - GA_ID=${NEXT_PUBLIC_GA_ID:-}
+      # Server-side base URL for generateMetadata on the force-dynamic homepage
+      # to read the live station name from the controller. Internal compose
+      # network name — not exposed to the browser (which uses /api via Caddy).
+      - CONTROLLER_INTERNAL_URL=http://controller:7701
+
+  # -------------------------------------------------------------------------
+  # TTS-HEAVY (optional) — sidecar for Chatterbox + PocketTTS
+  # -------------------------------------------------------------------------
+  # Heavy PyTorch engines pulled out of the controller image so operators on
+  # the pre-built ghcr.io images can opt into them without a custom rebuild
+  # (issue #103). NOT started by default. Enable with:
+  #
+  #   docker compose --profile tts-heavy up -d
+  #
+  # The controller is wired with TTS_HEAVY_URL pointing here unconditionally;
+  # when the profile is off the URL is unreachable and chatterbox.ts /
+  # pocketTts.ts report unavailable, so the dispatcher falls back to Piper —
+  # same behaviour as the default image today.
+  #
+  # See docker/Dockerfile.tts-heavy + docker/tts-heavy/server.py.
+  tts-heavy:
+    image: ghcr.io/perminder-klair/subwave-tts-heavy:${SUBWAVE_VERSION:-latest}
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.tts-heavy
+      args:
+        # GPU opt-in: point the Chatterbox venv's torch install at a CUDA wheel
+        # index to build a GPU-capable image. Defaults to CPU wheels; override
+        # with e.g. CHATTERBOX_TORCH_INDEX_URL=https://download.pytorch.org/whl/cu124
+        # and layer on docker-compose.tts-heavy-gpu.yml (device reservation +
+        # TTS_HEAVY_DEVICE=cuda). Source build only. See docs/gpu-tts.md.
+        CHATTERBOX_TORCH_INDEX_URL: ${CHATTERBOX_TORCH_INDEX_URL:-https://download.pytorch.org/whl/cpu}
+        # RTX 50-series (Blackwell) only: chatterbox-tts pins torch==2.6.0, which
+        # has no sm_120 kernels. Set a newer spec to override the pin, paired with
+        # a cu128 index above, e.g. CHATTERBOX_TORCH_SPEC="torch==2.9.1 torchaudio==2.9.1".
+        CHATTERBOX_TORCH_SPEC: ${CHATTERBOX_TORCH_SPEC:-}
+    # amd64-only image (heavy PyTorch stack); pinned so it runs under emulation
+    # on arm64 hosts. The other services are multi-arch and auto-select.
+    platform: linux/amd64
+    container_name: sub-wave-tts-heavy
+    restart: unless-stopped
+    logging: *default-logging
+    # OOM containment: cap the resident set so a runaway model load (a huge
+    # reference WAV, a wedged PyTorch allocation) is killed inside this
+    # container instead of triggering the host OOM-killer and taking broadcast
+    # or the controller down with it. Default is generous — real Chatterbox +
+    # PocketTTS peaks sit well under it. Raise/lower via TTS_HEAVY_MEM_LIMIT in .env.
+    mem_limit: ${TTS_HEAVY_MEM_LIMIT:-10g}
+    profiles: ["tts-heavy"]
+    environment:
+      # 'cpu' or 'cuda'. The default image is CPU-only — cuda needs a GPU
+      # host + nvidia runtime; the server gracefully falls back to cpu when
+      # CUDA isn't actually available.
+      - TTS_HEAVY_DEVICE=${TTS_HEAVY_DEVICE:-cpu}
+      # Default voice id used by PocketTTS when a persona doesn't override it.
+      - POCKET_TTS_VOICE=${POCKET_TTS_VOICE:-alba}
+      # Which heavy engines to actually load. Both are baked into the image;
+      # each costs RAM + a first-boot weight download + startup time, so set
+      # this to a single engine if you only use one. Comma-separated.
+      # e.g. TTS_HEAVY_ENGINES=pocket-tts runs PocketTTS only (no Chatterbox).
+      - TTS_HEAVY_ENGINES=${TTS_HEAVY_ENGINES:-chatterbox,pocket-tts}
+      # Optional — enables PocketTTS zero-shot voice CLONING (issue #238). The
+      # cloning weights (kyutai/pocket-tts) are gated on Hugging Face; without a
+      # token the engine loads the open weights and cloned .wav voices revert to
+      # a built-in. Accept the model terms on huggingface.co/kyutai/pocket-tts,
+      # then put HF_TOKEN=hf_... in your root .env. Built-in voices need no token.
+      - HF_TOKEN=${HF_TOKEN:-}
+    volumes:
+      # Same shared mount as the controller — the sidecar writes WAVs into
+      # /var/sub-wave/voice/* and the controller hands the path to Liquidsoap.
+      - *state-mount
+      # Persist the per-engine Hugging Face caches across container recreates.
+      # Weights download at boot (the workers load the model before reporting
+      # ready) — without these volumes that multi-GB fetch repeats on every
+      # `up -d --build` / image pull / update. With them it happens once.
+      - tts-heavy-chatterbox-cache:/opt/chatterbox/hf-cache
+      - tts-heavy-pocket-cache:/opt/pocket-tts/hf-cache
+
+  # -------------------------------------------------------------------------
+  # ANALYZER — acoustic-analysis sidecar (bpm / key / intro / loudness;
+  # + CLAP "sounds-like" embeddings and Demucs vocal-activity ranges).
+  # -------------------------------------------------------------------------
+  # Starts by default alongside the core services (like controller/web). The
+  # controller resolves its analysis backend from ANALYZE_URL (this service),
+  # then a local venv. Only the heavy *voices* (Chatterbox/PocketTTS) stay
+  # opt-in — under the separate `tts-heavy` profile; acoustic analysis is
+  # default-on here. To skip it, `docker compose stop analyzer` after boot.
+  #
+  # The default image is LEAN (bpm/key/intro/loudness, multi-arch). The CLAP
+  # "sounds-like" + Demucs vocal dimensions are the heavy opt-in: set
+  # ANALYZER_HEAVY=1 in .env to pull `subwave-analyzer-heavy` instead.
+  analyzer:
+    # Default: the LEAN, multi-arch image (librosa — bpm/key/intro/loudness).
+    # Set ANALYZER_HEAVY=1 in .env to switch to the CLAP "sounds-like" + Demucs
+    # vocal image (`subwave-analyzer-heavy`, amd64-only). No platform pin here so
+    # the lean image runs natively on arm64; if you set ANALYZER_HEAVY=1 on an
+    # arm64 host, also set DOCKER_DEFAULT_PLATFORM=linux/amd64 (runs emulated).
+    image: ghcr.io/perminder-klair/subwave-analyzer${ANALYZER_HEAVY:+-heavy}:${SUBWAVE_VERSION:-latest}
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.analyzer
+      args:
+        # Local `docker compose build analyzer` mirrors the pulled image: lean
+        # unless ANALYZER_HEAVY is set, then it builds the CLAP + Demucs stack.
+        WITH_CLAP: ${ANALYZER_HEAVY:+1}
+        WITH_DEMUCS: ${ANALYZER_HEAVY:+1}
+    container_name: sub-wave-analyzer
+    restart: unless-stopped
+    logging: *default-logging
+    # OOM containment: cap the resident set so a runaway analysis (a long track,
+    # a CLAP/Demucs allocation spike on the heavy image) is killed inside this
+    # container instead of triggering the host OOM-killer and taking broadcast or
+    # the controller down with it. Default is generous — librosa passes sit well
+    # under it, and even CLAP + Demucs on the heavy image fit. Raise/lower via
+    # ANALYZER_MEM_LIMIT in .env.
+    mem_limit: ${ANALYZER_MEM_LIMIT:-6g}
+    environment:
+      # Force CLAP embeddings / Demucs vocal ranges on for the whole analyze
+      # pass. Usually unnecessary — the admin toggles drive these per request.
+      - ANALYZE_AUDIO_EMBEDDING=${ANALYZE_AUDIO_EMBEDDING:-}
+      - ANALYZE_VOCAL_ACTIVITY=${ANALYZE_VOCAL_ACTIVITY:-}
+      # Torch device for CLAP/Demucs: auto (default) / cpu / cuda. Only
+      # meaningful on the cuda analyzer flavour (docker-compose.analyzer-gpu.yml);
+      # cpu-wheel images always resolve to cpu.
+      - ANALYZE_DEVICE=${ANALYZE_DEVICE:-}
+      # Seconds of no requests before the cuda flavour drops its models out of
+      # VRAM (default 300; 0 = never). CPU images ignore it.
+      - ANALYZE_IDLE_UNLOAD_S=${ANALYZE_IDLE_UNLOAD_S:-}
+      - CLAP_MODEL=${CLAP_MODEL:-}
+      - CLAP_MODEL_PATH=${CLAP_MODEL_PATH:-}
+      # Demucs model + analysis-window overrides (worker reads both; see
+      # .env.example "Optional model overrides").
+      - DEMUCS_MODEL=${DEMUCS_MODEL:-}
+      - ANALYZE_SECONDS=${ANALYZE_SECONDS:-}
+      - ANALYZE_CLAP_WINDOWS=${ANALYZE_CLAP_WINDOWS:-}
+      - ANALYZE_OUTRO_SECONDS=${ANALYZE_OUTRO_SECONDS:-}
+      # CLAP isn't gated, but an anonymous HF Hub download is rate-limited and
+      # slow. Same var as tts-heavy — set HF_TOKEN=hf_... in your root .env once
+      # and both sidecars pick it up.
+      - HF_TOKEN=${HF_TOKEN:-}
+    volumes:
+      # Shared mount with the controller — reads tracks the controller
+      # pre-fetched into /var/sub-wave/analyze-tmp.
+      - *state-mount
+      # Persist the CLAP/Demucs HF cache across recreates (weights download
+      # lazily on the first analyze pass that needs them).
+      - analyzer-cache:/opt/analyzer/hf-cache
+
+volumes:
+  caddy-data:
+  caddy-config:
+  tts-heavy-chatterbox-cache:
+  tts-heavy-pocket-cache:
+  analyzer-cache:

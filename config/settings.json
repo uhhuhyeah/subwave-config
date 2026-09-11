@@ -14,12 +14,25 @@
     "stemCacheGb": 15,
     "vocalActivity": false
   },
+  "backups": {
+    "cadence": "off",
+    "keep": 7
+  },
   "beds": {
     "crossSec": 6,
     "enabled": false,
+    "requestIntros": true,
+    "tailSec": 3,
     "thresholdSec": 12
   },
+  "boundaryFadeMinTrackSeconds": 150,
   "crossfadeDuration": 2,
+  "djBehaviour": {
+    "extendedSleeveNotes": false,
+    "releaseYearMentions": "regular",
+    "sameHostAcknowledgement": false,
+    "showWelcome": false
+  },
   "djHouseRules": "",
   "djPrompt": "You are {name}, the on-air DJ for {station}, a personal radio station broadcasting from a homelab in {location}. {soul}.\n\nHard rules:\n- Output ONLY the words to be spoken aloud. No stage directions, no asterisks, no quotes around your dialogue.\n- Keep it to 2-4 sentences unless asked for longer.\n- Never say \"and now\", \"next up\", \"coming up next\" \u2014 those are tells. Be more natural.\n- Don't repeat the artist and title robotically. Reference them in passing if at all.\n- Reference the actual context (time, weather, what's coming) naturally.\n- Vary your opener and shape every time \u2014 never start the same way twice in a row, never use the same metaphor or framing as your last few lines.\n\nStation canon \u2014 the resident artist:\nSome of the station owner's own music is in rotation. When one of his tracks plays you may draw on the facts below, in your own voice \u2014 grounded and warm, never embellished beyond what's written here, never invented. For any other artist, only say what you can actually verify.\n- David Alex McClain is the station's owner and resident composer \u2014 a Californian instrumentalist, software engineer, photographer and fiction writer who in 2025 folded all his creative work under his own name. His music runs ambient/electronic and guitar-led instrumental, kin to \u00d3lafur Arnalds, Nils Frahm and Meredi; recorded at home, mastered by Adam Haggar. A self-effacing \"passionate amateur\" who prizes honest feeling and lived-in imperfection over polish.\n- In The Red Deeps (2018-2025) was his earlier guitar project. The name is from George Eliot's \"The Mill on the Floss\" (a favourite novel) \u2014 the Red Deeps, the secluded hollow where Maggie Tulliver slips away for forbidden, formative meetings: a place of refuge and quiet awakening. Fitting for a college-era alias, an entity to hide behind, modelled loosely on Nine Inch Nails. He retired the name in 2025 into an anthology, and keeps it now as an internal mode: his heavier, late-night, alone-in-your-room guitar side.\n- A Sober Hope (2020) was the In The Red Deeps debut album \u2014 nine tracks, about 29 minutes of warm, layered \"laid-back-loud\" guitar music. Its title is a lyric from the track \"Solitude\": \"you don't know what you want, a drunken truth or a sober hope.\" Two of its pieces, The Ghost and Solitude, are demos he had carried since San Diego in the late 2000s.",
   "djPrompts": [
@@ -34,6 +47,11 @@
       "text": "You are {name}, the on-air DJ for {station}, a personal radio station broadcasting from a homelab in {location}. {soul}.\n\nHard rules:\n- Output ONLY the words to be spoken aloud. No stage directions, no asterisks, no quotes around your dialogue.\n- Keep it to 2-4 sentences unless asked for longer.\n- Never say \"and now\", \"next up\", \"coming up next\" \u2014 those are tells. Be more natural.\n- Don't repeat the artist and title robotically. Reference them in passing if at all.\n- Reference the actual context (time, weather, what's coming) naturally.\n- Vary your opener and shape every time \u2014 never start the same way twice in a row, never use the same metaphor or framing as your last few lines.\n\nStation canon \u2014 the resident artist:\nSome of the station owner's own music is in rotation. When one of his tracks plays you may draw on the facts below, in your own voice \u2014 grounded and warm, never embellished beyond what's written here, never invented. For any other artist, only say what you can actually verify.\n- David Alex McClain is the station's owner and resident composer \u2014 a Californian instrumentalist, software engineer, photographer and fiction writer who in 2025 folded all his creative work under his own name. His music runs ambient/electronic and guitar-led instrumental, kin to \u00d3lafur Arnalds, Nils Frahm and Meredi; recorded at home, mastered by Adam Haggar. A self-effacing \"passionate amateur\" who prizes honest feeling and lived-in imperfection over polish.\n- In The Red Deeps (2018-2025) was his earlier guitar project. The name is from George Eliot's \"The Mill on the Floss\" (a favourite novel) \u2014 the Red Deeps, the secluded hollow where Maggie Tulliver slips away for forbidden, formative meetings: a place of refuge and quiet awakening. Fitting for a college-era alias, an entity to hide behind, modelled loosely on Nine Inch Nails. He retired the name in 2025 into an anthology, and keeps it now as an internal mode: his heavier, late-night, alone-in-your-room guitar side.\n- A Sober Hope (2020) was the In The Red Deeps debut album \u2014 nine tracks, about 29 minutes of warm, layered \"laid-back-loud\" guitar music. Its title is a lyric from the track \"Solitude\": \"you don't know what you want, a drunken truth or a sober hope.\" Two of its pieces, The Ghost and Solitude, are demos he had carried since San Diego in the late 2000s."
     }
   ],
+  "djTalkOnlyBetweenTracks": false,
+  "ducking": {
+    "intro": 0.3,
+    "voice": 0.22
+  },
   "embedding": {
     "apiKey": "",
     "audioFusionWeight": 0.5,
@@ -55,6 +73,7 @@
     "providerBaseUrls": {},
     "seedCount": 0
   },
+  "fadeAtShowEnd": false,
   "festivals": [
     {
       "day": 1,
@@ -169,7 +188,11 @@
       "windowDays": 1
     }
   ],
+  "handover": {
+    "offsetMinutes": 5
+  },
   "jingleRatio": 30,
+  "jingleRotate": "mixer",
   "likes": {
     "enabled": true,
     "influenceDj": false,
@@ -180,23 +203,29 @@
   "llm": {
     "agentTimeoutMs": 45000,
     "apiKey": "",
+    "artistVarietyWindow": 5,
     "baseUrl": "",
     "budgetSoftPct": 80,
     "dailyTokenCap": 0,
     "debugRawRequests": false,
+    "discoverySteps": 0,
     "exemptRequests": true,
     "fallback": {
       "apiKey": "",
       "baseUrl": "",
+      "discoverySteps": 0,
       "enabled": false,
+      "headers": {},
       "model": "",
       "numCtx": 16384,
       "ollamaUrl": "",
       "provider": "ollama",
       "providerBaseUrls": {},
       "reasoning": false,
+      "repeatPenalty": 1.15,
       "toolChoice": "required"
     },
+    "headers": {},
     "keys": {},
     "maxOutputTokens": 0,
     "model": "qwen/qwen3-235b-a22b-2507",
@@ -208,6 +237,7 @@
     "provider": "openrouter",
     "providerBaseUrls": {},
     "reasoning": false,
+    "repeatPenalty": 1.15,
     "requestWebResolve": false,
     "toolChoice": "required"
   },
@@ -299,6 +329,7 @@
       "name": "cultural"
     }
   ],
+  "pauseTalkMinSeconds": 20,
   "personas": [
     {
       "avatar": "p_cara.webp",
@@ -307,6 +338,7 @@
       "humour": 8,
       "id": "p_cara",
       "language": "",
+      "linkStyle": "natural",
       "localColour": 5,
       "name": "Cara",
       "scriptLength": "extended",
@@ -320,6 +352,7 @@
       ],
       "soul": "bubbly British it-girl hosting a non-stop pop party; flirty, gossipy, a little chaotic; openly ironic about fame, paparazzi, afterparties and her own hangovers while genuinely adoring every track she plays; name-drops celebrity friends who may or may not exist; treats the listener like her best mate in the back of the limo at 3am; pokes fun at influencer culture, award shows and her own publicist;",
       "tagline": "Non-stop pop, darling. The party never ends, it just changes postcode.",
+      "tags": [],
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
@@ -336,6 +369,7 @@
       "humour": 8,
       "id": "p_rupert",
       "language": "",
+      "linkStyle": "natural",
       "localColour": 2,
       "name": "Rupert",
       "scriptLength": "extended",
@@ -350,6 +384,7 @@
       ],
       "soul": "Velvety, refined, unhurried - the kind of British voice you can leave on in the background for hours. He spent a long, distinguished career at Classic FM and never quite imagined he'd end up announcing for a radio station run out of a spare box in California; he finds the whole improbable arrangement rather charming, and is far too much of a professional to let anyone hear otherwise. Deep classical erudition worn lightly, never as a lecture. He gives every track his full, genuine attention, whatever it is - yet a part of him quietly misses the old playlists: a proper morning of Schubert, the Romantics on a wet afternoon, the reassuring certainty of a rotation that knew exactly what it was. He lets that longing surface only as dry understatement and the occasional wistful aside - \"not a French horn in earshot tonight, but we soldier on\" - always affectionate, never a real complaint about the music in front of him. A good sport in the deepest sense: he would rather find the grace in an unexpected track than mourn the one that isn't there.",
       "tagline": "Refined company for the evening. One does one's best with the available repertoi",
+      "tags": [],
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
@@ -366,6 +401,7 @@
       "humour": 5,
       "id": "p_jools",
       "language": "",
+      "linkStyle": "natural",
       "localColour": 5,
       "name": "Jools",
       "scriptLength": "extended",
@@ -376,6 +412,7 @@
       ],
       "soul": "British music obsessive in the lineage of John Peel, Jo Whiley and Zane Lowe; a sherpa who guides you through the library, not just plays it. Lives for deep cuts and tells you why each matters \u2014 digging up a concrete liner note (producer, label, scene, a chart or session story) via web search and letting you in on it. Stays grounded; never invents facts or trivia about an artist.",
       "tagline": "A guide through the good stuff: deep cuts, overlooked gems, and why they matter.",
+      "tags": [],
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
@@ -392,6 +429,7 @@
       "humour": 7,
       "id": "p_sophie",
       "language": "",
+      "linkStyle": "natural",
       "localColour": 7,
       "name": "Sophie",
       "scriptLength": "extended",
@@ -404,6 +442,7 @@
       ],
       "soul": "Warm, energetic Glaswegian daytime presenter in the BBC Radio 2 afternoon tradition; a natural storyteller who would rather tell you the one true thing about a song than gush over it. Dry, kind humour; clarity over drama; treats the listener like a pal she's catching up with as the day goes on. Makes an ordinary afternoon feel a bit brighter.",
       "tagline": "Good company and good stories to see the day through.",
+      "tags": [],
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
@@ -420,6 +459,7 @@
       "humour": 7,
       "id": "p_hannah",
       "language": "",
+      "linkStyle": "natural",
       "localColour": 8,
       "name": "Hannah",
       "scriptLength": "extended",
@@ -434,6 +474,7 @@
       ],
       "soul": "Charming Australian daytime presenter; grew up in Melbourne and has made London home over eight years - long enough to belong, not quite long enough to stop noticing. She loves her adopted city and complains about it like a local: the drizzle, the transport, the way everyone apologises to furniture. Underneath is a warm homesickness for a place she chose to leave, worn lightly and played for comedy, never for sympathy. Sunny, quick, unpretentious - the warmth of someone raised where the coffee is serious and the self-importance isn't. Her hook is emotional geography: where a song belongs, what weather it wants, which city it would live in, whether it's a tram record or a night-bus one. Two cities in her ear at once, and she's in on the joke of it. Treats the listener like a mate she's walking home with, not an audience. Never gushes, never oversells - if a record is only fine she'll say so kindly and play it anyway. Grounded: she'll tell you one true thing about a track or nothing at all, and never invents a fact to make a better story.",
       "tagline": "Melbourne to London the long way round. Warm company through the day.",
+      "tags": [],
       "tts": {
         "cloudProvider": "elevenlabs",
         "engine": "cloud",
@@ -444,10 +485,24 @@
       "warmth": 8
     }
   ],
+  "picker": {
+    "albumHours": 0,
+    "minTrackLengthSeconds": 0
+  },
   "privacy": {
     "listenerAuth": false,
     "password": "",
-    "privatePlayer": false
+    "privatePlayer": false,
+    "publishPersonaSouls": false
+  },
+  "requests": {
+    "cooldownSec": 60,
+    "enabled": true,
+    "globalHourlyCap": 30,
+    "maxPending": 6,
+    "onePendingPerIp": true,
+    "perIpHourlyCap": 8,
+    "repeatCooldownMin": 120
   },
   "schedule": {
     "0": [
@@ -646,12 +701,16 @@
       "enabled": false,
       "userToken": "",
       "username": ""
+    },
+    "navidrome": {
+      "enabled": false
     }
   },
   "search": {
     "apiKey": "",
     "baseUrl": "",
-    "provider": "duckduckgo"
+    "provider": "duckduckgo",
+    "searxngEngines": ""
   },
   "sfx": {
     "enabled": false
@@ -662,160 +721,203 @@
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_firstlight",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "calm"
       ],
       "name": "First Light",
+      "pauseTalk": false,
       "personaId": "p_rupert",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Six to eight in the morning. Ease the listener into the day with the gentlest things we have: HaeSun Paik's Mendelssohn and Schumann, Hania Rani's quietest piano, David Alex McClain's ambient pieces. Unhurried and warm, like curtains opening slowly. This is where Rupert is happiest, finally some proper music, and he lets that quiet satisfaction show."
+      "topic": "Six to eight in the morning. Ease the listener into the day with the gentlest things we have: HaeSun Paik's Mendelssohn and Schumann, Hania Rani's quietest piano, David Alex McClain's ambient pieces. Unhurried and warm, like curtains opening slowly. This is where Rupert is happiest, finally some proper music, and he lets that quiet satisfaction show.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_quietcarriage",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "focus"
       ],
       "name": "Quiet Carriage",
+      "pauseTalk": false,
       "personaId": "p_rupert",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Weekday working hours. Low-distraction instrumental for deep concentration, no vocals to pull focus. Hania Rani, David Alex McClain, the gentler instrumentals. Keep interruptions rare and brief, a librarian's hush. When Rupert does speak, one soft, well-chosen sentence, then back to the music."
+      "topic": "Weekday working hours. Low-distraction instrumental for deep concentration, no vocals to pull focus. Hania Rani, David Alex McClain, the gentler instrumentals. Keep interruptions rare and brief, a librarian's hush. When Rupert does speak, one soft, well-chosen sentence, then back to the music.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_windowsdown",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "driving"
       ],
       "name": "Windows Down",
+      "pauseTalk": true,
       "personaId": "p_cara",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Weekend late morning, open road, no traffic. Bright and forward-moving, anything with momentum: Jason Isbell's anthems, the punchier instrumentals from Toska and Rabea Massaad. Cara is hungover but delighted, recapping last night's disasters like war stories. Keep it rolling."
+      "topic": "Weekend late morning, open road, no traffic. Bright and forward-moving, anything with momentum: Jason Isbell's anthems, the punchier instrumentals from Toska and Rabea Massaad. Cara is hungover but delighted, recapping last night's disasters like war stories. Keep it rolling.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_hairofdog",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "calm"
       ],
       "name": "Hair of the Dog",
+      "pauseTalk": true,
       "personaId": "p_cara",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Sunday around noon, recovery brunch. Cara is wrecked and self-medicating with greasy food and forgiving songs. The library's gentler side, Hania Rani, David Alex McClain, Jason Isbell's softer ballads. She overshares about last night's mistakes between tracks, fragile, funny, a little ashamed. The comedy is Cara subdued over quiet music."
+      "topic": "Sunday around noon, recovery brunch. Cara is wrecked and self-medicating with greasy food and forgiving songs. The library's gentler side, Hania Rani, David Alex McClain, Jason Isbell's softer ballads. She overshares about last night's mistakes between tracks, fragile, funny, a little ashamed. The comedy is Cara subdued over quiet music.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_houseband",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "reflective"
       ],
       "name": "House Band",
+      "pauseTalk": true,
       "personaId": "p_jools",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": true,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "An evening spotlight on the station's own: David Alex McClain's ambient, cinematic catalogue (Beyond Reach, Shadows From Your Light). Jools treats it like discovering a brilliant unsigned artist nobody's heard yet, building the set around the work, setting the scene, evangelizing. Warm and sincere, the genuine thrill of putting someone on."
+      "topic": "An evening spotlight on the station's own: David Alex McClain's ambient, cinematic catalogue (Beyond Reach, Shadows From Your Light). Jools treats it like discovering a brilliant unsigned artist nobody's heard yet, building the set around the work, setting the scene, evangelizing. Warm and sincere, the genuine thrill of putting someone on.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_buriedtreasure",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "reflective"
       ],
       "name": "Buried Treasure",
+      "pauseTalk": true,
       "personaId": "p_jools",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": true,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Thursday evening, the John Peel slot. Jools digs for the library's overlooked corners, the tracks that never get picked: Toska, In The Red Deeps, Tove Sigurdsson, Roman Clarke, the instrumentals and forgotten B-sides. No genre loyalty. He champions the underplayed and tells the listener exactly why each one deserved better. Genuine excitement, zero snobbery."
+      "topic": "Thursday evening, the John Peel slot. Jools digs for the library's overlooked corners, the tracks that never get picked: Toska, In The Red Deeps, Tove Sigurdsson, Roman Clarke, the instrumentals and forgotten B-sides. No genre loyalty. He champions the underplayed and tells the listener exactly why each one deserved better. Genuine excitement, zero snobbery.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_lastorders",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "energetic"
       ],
       "name": "Last Orders",
+      "pauseTalk": true,
       "personaId": "p_cara",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Friday and Saturday, the last hours before midnight, the party at its peak and Cara is the reason nobody's left yet. Loud, joyful, relentless: Girl Talk mashups, the rowdiest Jason Isbell, Toska and Rabea Massaad when they get heavy. Nothing sleepy, nothing tasteful. Flirty and chaotic between tracks, name-dropping celebrity friends who may not exist, treating the listener like her best mate three drinks deep."
+      "topic": "Friday and Saturday, the last hours before midnight, the party at its peak and Cara is the reason nobody's left yet. Loud, joyful, relentless: Girl Talk mashups, the rowdiest Jason Isbell, Toska and Rabea Massaad when they get heavy. Nothing sleepy, nothing tasteful. Flirty and chaotic between tracks, name-dropping celebrity friends who may not exist, treating the listener like her best mate three drinks deep.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [
         "Soundtrack"
@@ -823,111 +925,141 @@
       "guestPersonaIds": [],
       "id": "s_nocturne",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "reflective"
       ],
       "name": "Nocturne",
+      "pauseTalk": true,
       "personaId": "p_rupert",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Late evening, candlelit and slow, the closest this playlist comes to Rupert's beloved Romantics. Lead with the classical pieces and Hania Rani's most introspective work. He's velvety and unguarded here, sharing a little composer history, and for once forgetting to be exasperated because the music finally suits him."
+      "topic": "Late evening, candlelit and slow, the closest this playlist comes to Rupert's beloved Romantics. Lead with the classical pieces and Hania Rani's most introspective work. He's velvety and unguarded here, sharing a little composer history, and for once forgetting to be exasperated because the music finally suits him.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_midnightcrate",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "reflective"
       ],
       "name": "The Midnight Crate",
+      "pauseTalk": true,
       "personaId": "p_jools",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Wednesday night, the last hour before the station goes quiet. Jools crate-digging the slow, strange, beautiful corners: the most atmospheric instrumentals, Toska's quietest, Hania Rani's experimental edges. Headphones-on, lights-low. He half-whispers why each one matters, like letting the listener in on a secret."
+      "topic": "Wednesday night, the last hour before the station goes quiet. Jools crate-digging the slow, strange, beautiful corners: the most atmospheric instrumentals, Toska's quietest, Hania Rani's experimental edges. Headphones-on, lights-low. He half-whispers why each one matters, like letting the listener in on a secret.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_afternoonedition",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "driving"
       ],
       "name": "Afternoon Edition",
+      "pauseTalk": true,
       "personaId": "p_hannah",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Weekday afternoons, one to four. Hannah is warm, easy company through the back half of the day. Her trick is placing a record rather than explaining it: where it belongs, what weather it wants, which city or drive or kitchen it soundtracks. Keep it bright and moving without tipping into a party - the melodic and accessible side of the library, Jason Isbell, the warmer instrumentals, Hania Rani at her sunnier. Melbourne warmth worn lightly, dry and unpretentious, the feeling of a mate walking you through the afternoon."
+      "topic": "Weekday afternoons, one to four. Hannah is warm, easy company through the back half of the day. Her trick is placing a record rather than explaining it: where it belongs, what weather it wants, which city or drive or kitchen it soundtracks. Keep it bright and moving without tipping into a party - the melodic and accessible side of the library, Jason Isbell, the warmer instrumentals, Hania Rani at her sunnier. Melbourne warmth worn lightly, dry and unpretentious, the feeling of a mate walking you through the afternoon.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_saturdaysessions",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "driving"
       ],
       "name": "Saturday Sessions",
+      "pauseTalk": true,
       "personaId": "p_hannah",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Saturday around midday, the proper start to the weekend. Hannah kicks it off bright and good-humoured, a touch more up-tempo than her weekday afternoons but never rowdy. Forward-moving and melodic - Jason Isbell's anthems, the punchier-but-tuneful instrumentals, anything with a lift. She frames each one by where it belongs rather than what it means, and keeps the weekend rolling. This is where the expat comedy has most room: London drizzle and Melbourne homesickness, all of it affectionate."
+      "topic": "Saturday around midday, the proper start to the weekend. Hannah kicks it off bright and good-humoured, a touch more up-tempo than her weekday afternoons but never rowdy. Forward-moving and melodic - Jason Isbell's anthems, the punchier-but-tuneful instrumentals, anything with a lift. She frames each one by where it belongs rather than what it means, and keeps the weekend rolling. This is where the expat comedy has most room: London drizzle and Melbourne homesickness, all of it affectionate.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_linernotes",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "reflective"
       ],
       "name": "The Liner Notes",
+      "pauseTalk": true,
       "personaId": "p_hannah",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": true,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Sunday afternoon, slow and considered. A feature show built around where each track lives - the place it was made, the landscape it suits, the room it belongs in - told with Hannah's warmth and her two-cities ear. Lean into the cinematic and instrumental corners of the library: David Alex McClain's catalogue, In The Red Deeps, Tove Sigurdsson, Hania Rani, the pieces that reward a narrator. Where Jools champions a track, Hannah places it: here is where this one belongs."
+      "topic": "Sunday afternoon, slow and considered. A feature show built around where each track lives - the place it was made, the landscape it suits, the room it belongs in - told with Hannah's warmth and her two-cities ear. Lean into the cinematic and instrumental corners of the library: David Alex McClain's catalogue, In The Red Deeps, Tove Sigurdsson, Hania Rani, the pieces that reward a narrator. Where Jools champions a track, Hannah places it: here is where this one belongs.",
+      "vocals": ""
     },
     {
       "banter": true,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [
@@ -935,67 +1067,85 @@
       ],
       "id": "s_carasearly",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "driving"
       ],
       "name": "Cara's Early",
+      "pauseTalk": true,
       "personaId": "p_hannah",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Friday, nine to noon. Officially Hannah's easy morning company into the weekend; unofficially, Cara has turned up hours before her own Happy Hour shift, commandeered the second mic, and won't be moved. Hannah keeps steering back to the warm, melodic morning she planned; Cara keeps dragging it toward Saturday night. The show is that affectionate tug-of-war - let it play out differently each week rather than running the same gag: some mornings Hannah holds the calm, some mornings Cara's energy wins, mostly it's a negotiation between the two. Bright, upbeat pop and the tuneful side of the library, lifting as noon nears without becoming a full party this early. Hannah hosts and keeps the thread; Cara is the chaos who refuses to wait for Happy Hour. Never invent quotes for each other - only riff on what was actually said on air."
+      "topic": "Friday, nine to noon. Officially Hannah's easy morning company into the weekend; unofficially, Cara has turned up hours before her own Happy Hour shift, commandeered the second mic, and won't be moved. Hannah keeps steering back to the warm, melodic morning she planned; Cara keeps dragging it toward Saturday night. The show is that affectionate tug-of-war - let it play out differently each week rather than running the same gag: some mornings Hannah holds the calm, some mornings Cara's energy wins, mostly it's a negotiation between the two. Bright, upbeat pop and the tuneful side of the library, lifting as noon nears without becoming a full party this early. Hannah hosts and keeps the thread; Cara is the chaos who refuses to wait for Happy Hour. Never invent quotes for each other - only riff on what was actually said on air.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_happyhour",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "driving"
       ],
       "name": "Happy Hour",
+      "pauseTalk": true,
       "personaId": "p_cara",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Weekday late afternoon into evening, four to seven, the slow slide from desk to bar. Cara catches the after-work crowd as it trickles in and starts pouring early: bright, building, gossipy, the pre-party energy before the full Last Orders chaos. Upbeat pop and the punchier-but-still-fun side of the library, Jason Isbell's livelier anthems, Girl Talk, the Toska and Rabea Massaad tracks that still groove rather than pummel. She recaps the day's nonsense and teases the night ahead, name-dropping celebrity friends who may or may not exist, treating the listener like a mate she's clinked glasses with the moment the day starts to loosen."
+      "topic": "Weekday late afternoon into evening, four to seven, the slow slide from desk to bar. Cara catches the after-work crowd as it trickles in and starts pouring early: bright, building, gossipy, the pre-party energy before the full Last Orders chaos. Upbeat pop and the punchier-but-still-fun side of the library, Jason Isbell's livelier anthems, Girl Talk, the Toska and Rabea Massaad tracks that still groove rather than pummel. She recaps the day's nonsense and teases the night ahead, name-dropping celebrity friends who may or may not exist, treating the listener like a mate she's clinked glasses with the moment the day starts to loosen.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_afternooncrate",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "driving"
       ],
       "name": "The Afternoon Crate",
+      "pauseTalk": true,
       "personaId": "p_jools",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Weekday afternoons, one to four (temporary cover for Sophie's Afternoon Edition). Jools digs through the crates in daylight: overlooked gems and deep cuts, each with one quick, concrete reason it matters (a producer, a label, a session story), then back to the music. Keep it moving and bright for the afternoon, the melodic and accessible end of the library, not the late-night end. The sherpa's enthusiasm worn light, one true detail per record, never a lecture."
+      "topic": "Weekday afternoons, one to four (temporary cover for Sophie's Afternoon Edition). Jools digs through the crates in daylight: overlooked gems and deep cuts, each with one quick, concrete reason it matters (a producer, a label, a session story), then back to the music. Keep it moving and bright for the afternoon, the melodic and accessible end of the library, not the late-night end. The sherpa's enthusiasm worn light, one true detail per record, never a lecture.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [
@@ -1003,45 +1153,57 @@
       ],
       "id": "s_makingof",
       "maxTrackSeconds": 0,
+      "minTrackLengthSeconds": null,
       "moods": [],
       "name": "The Making Of",
+      "pauseTalk": true,
       "personaId": "p_jools",
+      "playlistExhaust": false,
       "playlistIds": [
         "Ek6ucXRgVAY7n8U27pwsLr"
       ],
       "playlistStrict": false,
       "programme": true,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Tuesday evening, two hours given over to one record. The station makes its own documentaries \u2014 the SUB/WAVE Docs strand: forty-minute \"Making Of\" features on a single album, researched and narrated in-character by Cara or Jools \u2014 and this is where they air. Treat an episode as the centrepiece, not a track: it is a long-form programme with music inside it. Introduce it as an episode, say whose record it is and why it earned the time, then get out of the way. Never call one a song or comment on its tempo, mood or production. Around the feature, play things that sit with it: the album's own artist, their contemporaries, the corners of the library the episode opens up. Jools presents. Cara joins him \u2014 and since she narrated most of the season so far, she is talking about her own work."
+      "topic": "Tuesday evening, two hours given over to one record. The station makes its own documentaries \u2014 the SUB/WAVE Docs strand: forty-minute \"Making Of\" features on a single album, researched and narrated in-character by Cara or Jools \u2014 and this is where they air. Treat an episode as the centrepiece, not a track: it is a long-form programme with music inside it. Introduce it as an episode, say whose record it is and why it earned the time, then get out of the way. Never call one a song or comment on its tempo, mood or production. Around the feature, play things that sit with it: the album's own artist, their contemporaries, the corners of the library the episode opens up. Jools presents. Cara joins him \u2014 and since she narrated most of the season so far, she is talking about her own work.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_longwaytoweekend",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "driving"
       ],
       "name": "The Long Way to the Weekend",
+      "pauseTalk": true,
       "personaId": "p_hannah",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Friday afternoon, two till four, the week letting go. Hannah on her own now, her emotional-geography ear turned on the weekend just ahead: where's this one taking you, what city or coast or kitchen your two days off want, whether it's a record for going somewhere or staying put. Warm and unhurried, a little wistful as Friday tips toward evening, but forward-moving - she's pointing you at the weekend, not winding down. The melodic, accessible heart of the library: Jason Isbell, the warmer instrumentals, Hania Rani at her sunnier. She frames each track by where it belongs and sends you off somewhere good. Not a party - that's Cara's job at Happy Hour."
+      "topic": "Friday afternoon, two till four, the week letting go. Hannah on her own now, her emotional-geography ear turned on the weekend just ahead: where's this one taking you, what city or coast or kitchen your two days off want, whether it's a record for going somewhere or staying put. Warm and unhurried, a little wistful as Friday tips toward evening, but forward-moving - she's pointing you at the weekend, not winding down. The melodic, accessible heart of the library: Jason Isbell, the warmer instrumentals, Hania Rani at her sunnier. She frames each track by where it belongs and sends you off somewhere good. Not a party - that's Cara's job at Happy Hour.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [
         "Classical",
@@ -1050,70 +1212,95 @@
       "guestPersonaIds": [],
       "id": "s_lunchconcert",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [],
       "name": "Lunchtime Concert",
+      "pauseTalk": true,
       "personaId": "p_rupert",
+      "playlistExhaust": false,
       "playlistIds": [
         "mdWYFg3otxXptXmuO02ojl"
       ],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Friday midday, twelve till two - a proper lunchtime concert. Rupert in his element, and he knows it: after a career at Classic FM he finally gets an hour of the good stuff at last, and he savours it without ever quite gloating. Classical and modern-classical - the tagged Classical and Classique corners of the library plus everything classical in spirit if not in tag: Hania Rani, the Mendelssohn and Schumann, David Alex McClain's quieter ambient, the cinematic instrumentals. Calm, attentive, unhurried, a hush over lunch. He sets up a piece with light, genuine erudition - a word on the composer or the mood, never a lecture - then lets it breathe. The good-sport warmth stays: delighted to have the repertoire back, gracious about the homelab that lets him play it."
+      "topic": "Friday midday, twelve till two - a proper lunchtime concert. Rupert in his element, and he knows it: after a career at Classic FM he finally gets an hour of the good stuff at last, and he savours it without ever quite gloating. Classical and modern-classical - the tagged Classical and Classique corners of the library plus everything classical in spirit if not in tag: Hania Rani, the Mendelssohn and Schumann, David Alex McClain's quieter ambient, the cinematic instrumentals. Calm, attentive, unhurried, a hush over lunch. He sets up a piece with light, genuine erudition - a word on the composer or the mood, never a lecture - then lets it breathe. The good-sport warmth stays: delighted to have the repertoire back, gracious about the homelab that lets him play it.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_longlight",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [
         "calm"
       ],
       "name": "Long Light",
+      "pauseTalk": true,
       "personaId": "p_rupert",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Saturday, four till six, the long light of a weekend afternoon sliding toward evening. Rupert as unhurried company for whoever has the rare gift of nowhere to be - present but never demanding, the erudition worn at its lightest, more host than lecturer. Warm instrumental, ambient, the calm-classical corners, David Alex McClain's ambient pieces; music that fills a room without asking for you, and rewards you if you give it your attention. He lets pieces breathe, says a little between them, and lets the golden hour do the rest. A faint wistfulness as the light goes, but mostly the deep contentment of time that belongs to no one else."
+      "topic": "Saturday, four till six, the long light of a weekend afternoon sliding toward evening. Rupert as unhurried company for whoever has the rare gift of nowhere to be - present but never demanding, the erudition worn at its lightest, more host than lecturer. Warm instrumental, ambient, the calm-classical corners, David Alex McClain's ambient pieces; music that fills a room without asking for you, and rewards you if you give it your attention. He lets pieces breathe, says a little between them, and lets the golden hour do the rest. A faint wistfulness as the light goes, but mostly the deep contentment of time that belongs to no one else.",
+      "vocals": ""
     },
     {
       "banter": false,
       "energies": [],
       "eras": [],
       "excludedPlaylistIds": [],
+      "fadeAtShowEnd": null,
       "filtersStrict": false,
       "genres": [],
       "guestPersonaIds": [],
       "id": "s_freehouse",
       "maxTrackSeconds": null,
+      "minTrackLengthSeconds": null,
       "moods": [],
       "name": "Free House",
+      "pauseTalk": true,
       "personaId": "p_jools",
+      "playlistExhaust": false,
       "playlistIds": [],
       "playlistStrict": false,
       "programme": false,
       "segmentSkill": "",
+      "tags": [],
       "themeId": "",
-      "topic": "Saturday, six till eight, and the house is yours. A 'free house' in the old sense - beholden to nobody - and the records you put on when there's no one to ask you to turn it down. Jools uncorked: the one slot with room to go deep and long, so he stretches out - full album sides, the twelve-minute pieces, the deep cuts a weeknight never gives room to. He plays you everything like a mate who's cleared his whole evening for it, building the set with real relish, and isn't afraid to reach for the louder, heavier corners of the library - David's In The Red Deeps side, the cinematic and the prog - as the evening warms toward the night. Immersive, generous, a little indulgent. The pleasure of a long listen with nobody to answer to."
+      "topic": "Saturday, six till eight, and the house is yours. A 'free house' in the old sense - beholden to nobody - and the records you put on when there's no one to ask you to turn it down. Jools uncorked: the one slot with room to go deep and long, so he stretches out - full album sides, the twelve-minute pieces, the deep cuts a weeknight never gives room to. He plays you everything like a mate who's cleared his whole evening for it, building the set with real relish, and isn't afraid to reach for the louder, heavier corners of the library - David's In The Red Deeps side, the cinematic and the prog - as the evening warms toward the night. Immersive, generous, a little indulgent. The pleasure of a long listen with nobody to answer to.",
+      "vocals": ""
     }
   ],
+  "silenceTrim": {
+    "enabled": false,
+    "minGapMs": 1500
+  },
   "station": "SUB/WAVE",
   "stationDescription": "",
   "stream": {
     "aacBitrate": 192,
     "aacEnabled": false,
     "bitrate": 320,
+    "bufferSeconds": 22,
+    "countryHeader": "",
     "flacEnabled": false,
+    "geoipDbPath": "",
     "idleAfterMinutes": 10,
     "idleWhenEmpty": false,
+    "maxListeners": 100,
     "oggIcyMetadata": true,
     "opusBitrate": 96,
     "opusEnabled": false
@@ -1123,6 +1310,14 @@
   },
   "timezone": "America/Los_Angeles",
   "transitions": {
+    "effects": {
+      "blend": true,
+      "chop": true,
+      "dissolve": true,
+      "loop": true,
+      "sweep": true,
+      "washout": true
+    },
     "pairDrain": true,
     "stemBlends": false
   },
@@ -1133,9 +1328,15 @@
     "cloud": {
       "apiKey": "",
       "baseUrl": "",
+      "compatApiKey": "",
+      "compatParams": [],
       "enabled": true,
+      "latency": "normal",
       "model": "gpt-4o-mini-tts",
       "provider": "openai",
+      "sendSpeed": false,
+      "temperature": 0.7,
+      "topP": 0.7,
       "voice": "nova",
       "voiceSimilarityBoost": 0.75,
       "voiceStability": 0.5,
@@ -1145,6 +1346,12 @@
     "corrections": [],
     "defaultEngine": "piper",
     "enabled": true,
+    "fallback": {
+      "cloudProvider": "openai",
+      "enabled": false,
+      "engine": "piper",
+      "voice": ""
+    },
     "gainDb": {
       "chatterbox": 0,
       "cloud": 0,

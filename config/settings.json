@@ -718,7 +718,9 @@
   "shows": [
     {
       "banter": false,
-      "energies": [],
+      "energies": [
+        "low"
+      ],
       "eras": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
@@ -746,7 +748,9 @@
     },
     {
       "banter": false,
-      "energies": [],
+      "energies": [
+        "low"
+      ],
       "eras": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,

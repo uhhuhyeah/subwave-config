@@ -15,7 +15,7 @@
 #         ./doctor.sh --quiet    # only the summary tally line
 #
 # Env (defaults shown; override in .env or inline):
-#   SUBWAVE_URL=http://192.168.1.18:7700
+#   SUBWAVE_URL=http://192.168.1.19:7700
 #   PVE_SSH=root@100.110.0.9   SUBWAVE_CTID=107   SUBWAVE_STACK_DIR=/opt/subwave
 set -uo pipefail
 cd "$(dirname "$0")"
@@ -25,7 +25,7 @@ source .env
 PVE_SSH="${PVE_SSH:-root@100.110.0.9}"
 SUBWAVE_CTID="${SUBWAVE_CTID:-107}"
 SUBWAVE_STACK_DIR="${SUBWAVE_STACK_DIR:-/opt/subwave}"
-SUBWAVE_URL="${SUBWAVE_URL:-http://192.168.1.18:7700}"
+SUBWAVE_URL="${SUBWAVE_URL:-http://192.168.1.19:7700}"
 QUIET=0; [ "${1:-}" = "--quiet" ] && QUIET=1
 
 # --- rendering -------------------------------------------------------------

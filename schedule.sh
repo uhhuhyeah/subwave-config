@@ -18,7 +18,7 @@
 #         ./schedule.sh --pull -p Cara  # combine freely
 #
 # Env (defaults shown; override in .env or inline):
-#   SUBWAVE_URL=http://192.168.1.18:7700   (only used by --pull)
+#   SUBWAVE_URL=http://192.168.1.19:7700   (only used by --pull)
 set -uo pipefail
 cd "$(dirname "$0")"
 

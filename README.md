@@ -82,7 +82,7 @@ A read-only view of `config/settings.json`'s `schedule` — the 24h × 7d grid (
 
 ## Reaching the LXC
 
-`SUBWAVE_URL=http://192.168.1.18:7700` works on the Brookgrass LAN and from any Tailscale device (pve01 subnet-routes `192.168.1.0/24`). The `/api/*` prefix is stripped by Caddy and proxied to the controller (`:7701`).
+`SUBWAVE_URL=http://192.168.1.19:7700` works on the Brookgrass LAN and from any Tailscale device (pve01 subnet-routes `192.168.1.0/24`). The `/api/*` prefix is stripped by Caddy and proxied to the controller (`:7701`).
 
 ## Rollback
 

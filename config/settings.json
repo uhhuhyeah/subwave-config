@@ -29,6 +29,9 @@
   "crossfadeDuration": 2,
   "djBehaviour": {
     "extendedSleeveNotes": false,
+    "recapChars": 140,
+    "recapLimit": 10,
+    "recapMinutes": 120,
     "releaseYearMentions": "regular",
     "sameHostAcknowledgement": false,
     "showWelcome": false
@@ -1223,7 +1226,7 @@
       "personaId": "p_rupert",
       "playlistExhaust": false,
       "playlistIds": [
-        "mdWYFg3otxXptXmuO02ojl"
+        "3mQpaiMhGXK68FjxFya9j3"
       ],
       "playlistStrict": false,
       "programme": false,

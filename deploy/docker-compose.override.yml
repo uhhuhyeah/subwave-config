@@ -1,0 +1,9 @@
+# Local overrides on top of the upstream docker-compose.yml (kept byte-identical
+# to upstream). Compose auto-merges this file from /opt/subwave, so it survives
+# upgrades that replace docker-compose.yml.
+services:
+  analyzer:
+    # Thermal cap. An uncapped CLAP backfill ran ~3 cores flat out and drove
+    # pve01 to 92C, tripping the thermal watchdog's power-off (2026-10-03).
+    # 1.5 CPUs makes a backfill slower but keeps it from cooking the host.
+    cpus: 1.5

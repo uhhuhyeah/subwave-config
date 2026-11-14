@@ -12,6 +12,7 @@
     "embeddings": true,
     "stemCache": false,
     "stemCacheGb": 15,
+    "stemOrphanPurgeEnabled": false,
     "vocalActivity": false
   },
   "backups": {
@@ -29,12 +30,14 @@
   "crossfadeDuration": 2,
   "djBehaviour": {
     "extendedSleeveNotes": false,
+    "holdDuckBetweenSpeakers": false,
+    "previewNextShow": true,
     "recapChars": 140,
     "recapLimit": 10,
     "recapMinutes": 120,
-    "releaseYearMentions": "regular",
-    "sameHostAcknowledgement": false,
-    "showWelcome": false
+    "releaseYearMentions": "occasional",
+    "sameHostAcknowledgement": true,
+    "showWelcome": true
   },
   "djHouseRules": "",
   "djPrompt": "You are {name}, the on-air DJ for {station}, a personal radio station broadcasting from a homelab in {location}. {soul}.\n\nHard rules:\n- Output ONLY the words to be spoken aloud. No stage directions, no asterisks, no quotes around your dialogue.\n- Keep it to 2-4 sentences unless asked for longer.\n- Never say \"and now\", \"next up\", \"coming up next\" \u2014 those are tells. Be more natural.\n- Don't repeat the artist and title robotically. Reference them in passing if at all.\n- Reference the actual context (time, weather, what's coming) naturally.\n- Vary your opener and shape every time \u2014 never start the same way twice in a row, never use the same metaphor or framing as your last few lines.\n\nStation canon \u2014 the resident artist:\nSome of the station owner's own music is in rotation. When one of his tracks plays you may draw on the facts below, in your own voice \u2014 grounded and warm, never embellished beyond what's written here, never invented. For any other artist, only say what you can actually verify.\n- David Alex McClain is the station's owner and resident composer \u2014 a Californian instrumentalist, software engineer, photographer and fiction writer who in 2025 folded all his creative work under his own name. His music runs ambient/electronic and guitar-led instrumental, kin to \u00d3lafur Arnalds, Nils Frahm and Meredi; recorded at home, mastered by Adam Haggar. A self-effacing \"passionate amateur\" who prizes honest feeling and lived-in imperfection over polish.\n- In The Red Deeps (2018-2025) was his earlier guitar project. The name is from George Eliot's \"The Mill on the Floss\" (a favourite novel) \u2014 the Red Deeps, the secluded hollow where Maggie Tulliver slips away for forbidden, formative meetings: a place of refuge and quiet awakening. Fitting for a college-era alias, an entity to hide behind, modelled loosely on Nine Inch Nails. He retired the name in 2025 into an anthology, and keeps it now as an internal mode: his heavier, late-night, alone-in-your-room guitar side.\n- A Sober Hope (2020) was the In The Red Deeps debut album \u2014 nine tracks, about 29 minutes of warm, layered \"laid-back-loud\" guitar music. Its title is a lyric from the track \"Solitude\": \"you don't know what you want, a drunken truth or a sober hope.\" Two of its pieces, The Ghost and Solitude, are demos he had carried since San Diego in the late 2000s.",
@@ -64,9 +67,11 @@
     "enabled": true,
     "enrichment": {
       "lastfmTags": false,
+      "lastfmTrackTags": false,
       "lyrics": true,
       "originalYear": true
     },
+    "headers": {},
     "knnNeighbours": 5,
     "maxActiveLearningRounds": 3,
     "model": "text-embedding-3-small",
@@ -194,6 +199,7 @@
   "handover": {
     "offsetMinutes": 5
   },
+  "jinglePlacement": "between",
   "jingleRatio": 30,
   "jingleRotate": "mixer",
   "likes": {
@@ -209,6 +215,7 @@
     "artistVarietyWindow": 5,
     "baseUrl": "",
     "budgetSoftPct": 80,
+    "compatibleMode": "local",
     "dailyTokenCap": 0,
     "debugRawRequests": false,
     "discoverySteps": 0,
@@ -216,8 +223,15 @@
     "fallback": {
       "apiKey": "",
       "baseUrl": "",
+      "compatibleMode": "local",
       "discoverySteps": 0,
       "enabled": false,
+      "geminiSafety": {
+        "dangerousContent": false,
+        "harassment": false,
+        "hateSpeech": false,
+        "sexuallyExplicit": false
+      },
       "headers": {},
       "model": "",
       "numCtx": 16384,
@@ -228,6 +242,14 @@
       "repeatPenalty": 1.15,
       "toolChoice": "required"
     },
+    "geminiSafety": {
+      "dangerousContent": false,
+      "harassment": false,
+      "hateSpeech": false,
+      "sexuallyExplicit": false
+    },
+    "genreVarietyWindow": 0,
+    "guestMusicalLeanings": false,
     "headers": {},
     "keys": {},
     "maxOutputTokens": 0,
@@ -241,8 +263,14 @@
     "providerBaseUrls": {},
     "reasoning": false,
     "repeatPenalty": 1.15,
+    "requestMatching": "agentic",
+    "requestTimeoutMs": 300000,
     "requestWebResolve": false,
-    "toolChoice": "required"
+    "segmentRuntime": "agentic",
+    "shortlistPasses": 3,
+    "shortlistSearchPreparation": false,
+    "toolChoice": "required",
+    "trackSelection": "agentic"
   },
   "locale": "en-GB",
   "loudness": {
@@ -250,6 +278,11 @@
     "source": "replaygain-then-measured",
     "targetLufs": -14
   },
+  "lyrics": {
+    "enabled": true,
+    "lrclib": true
+  },
+  "maxTrackLengthMode": "cut",
   "maxTrackSeconds": 0,
   "minTrackSeconds": 30,
   "moodSchedule": {
@@ -343,6 +376,7 @@
       "language": "",
       "linkStyle": "natural",
       "localColour": 5,
+      "musicLean": "",
       "name": "Cara",
       "scriptLength": "extended",
       "skills": [
@@ -363,6 +397,7 @@
         "speed": 1.1,
         "voice": "ZF6FPAbjXT4488VcRRnw"
       },
+      "voiceStyle": "",
       "warmth": 6
     },
     {
@@ -374,6 +409,7 @@
       "language": "",
       "linkStyle": "natural",
       "localColour": 2,
+      "musicLean": "",
       "name": "Rupert",
       "scriptLength": "extended",
       "skills": [
@@ -395,6 +431,7 @@
         "speed": 1,
         "voice": "auq43ws1oslv0tO4BDa7"
       },
+      "voiceStyle": "",
       "warmth": 8
     },
     {
@@ -406,6 +443,7 @@
       "language": "",
       "linkStyle": "natural",
       "localColour": 5,
+      "musicLean": "",
       "name": "Jools",
       "scriptLength": "extended",
       "skills": [
@@ -423,6 +461,7 @@
         "speed": 1,
         "voice": "1BUhH8aaMvGMUdGAmWVM"
       },
+      "voiceStyle": "",
       "warmth": 8
     },
     {
@@ -434,6 +473,7 @@
       "language": "",
       "linkStyle": "natural",
       "localColour": 7,
+      "musicLean": "",
       "name": "Sophie",
       "scriptLength": "extended",
       "skills": [
@@ -453,6 +493,7 @@
         "speed": 1,
         "voice": "iePvrB4HtMcAormXZou7"
       },
+      "voiceStyle": "",
       "warmth": 8
     },
     {
@@ -464,6 +505,7 @@
       "language": "",
       "linkStyle": "natural",
       "localColour": 8,
+      "musicLean": "",
       "name": "Hannah",
       "scriptLength": "extended",
       "skills": [
@@ -485,6 +527,7 @@
         "speed": 1,
         "voice": "cvpTJfe9LINpHIOmB2Hp"
       },
+      "voiceStyle": "",
       "warmth": 8
     }
   ],
@@ -725,6 +768,8 @@
         "low"
       ],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -741,7 +786,9 @@
       "personaId": "p_rupert",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -755,6 +802,8 @@
         "low"
       ],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -771,7 +820,9 @@
       "personaId": "p_rupert",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -783,6 +834,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -799,7 +852,9 @@
       "personaId": "p_cara",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -811,6 +866,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -827,7 +884,9 @@
       "personaId": "p_cara",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -839,6 +898,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -855,7 +916,9 @@
       "personaId": "p_jools",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": true,
       "segmentSkill": "",
       "tags": [],
@@ -867,6 +930,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -883,7 +948,9 @@
       "personaId": "p_jools",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": true,
       "segmentSkill": "",
       "tags": [],
@@ -895,6 +962,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -911,7 +980,9 @@
       "personaId": "p_cara",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -923,6 +994,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -941,7 +1014,9 @@
       "personaId": "p_rupert",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -953,6 +1028,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -969,7 +1046,9 @@
       "personaId": "p_jools",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -981,6 +1060,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -997,7 +1078,9 @@
       "personaId": "p_hannah",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -1009,6 +1092,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -1025,7 +1110,9 @@
       "personaId": "p_hannah",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -1037,6 +1124,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -1053,7 +1142,9 @@
       "personaId": "p_hannah",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": true,
       "segmentSkill": "",
       "tags": [],
@@ -1065,6 +1156,8 @@
       "banter": true,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -1083,7 +1176,9 @@
       "personaId": "p_hannah",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -1095,6 +1190,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -1111,7 +1208,9 @@
       "personaId": "p_cara",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -1123,6 +1222,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -1139,7 +1240,9 @@
       "personaId": "p_jools",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -1151,6 +1254,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -1169,7 +1274,9 @@
       "playlistIds": [
         "6sl39ry18pgzBPEwTqyXXP"
       ],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": true,
       "segmentSkill": "",
       "tags": [],
@@ -1181,6 +1288,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -1197,7 +1306,9 @@
       "personaId": "p_hannah",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -1209,6 +1320,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -1228,7 +1341,9 @@
       "playlistIds": [
         "3mQpaiMhGXK68FjxFya9j3"
       ],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -1240,6 +1355,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -1256,7 +1373,9 @@
       "personaId": "p_rupert",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -1268,6 +1387,8 @@
       "banter": false,
       "energies": [],
       "eras": [],
+      "excludeExplicit": false,
+      "excludedAlbumKinds": [],
       "excludedPlaylistIds": [],
       "fadeAtShowEnd": null,
       "filtersStrict": false,
@@ -1282,7 +1403,9 @@
       "personaId": "p_jools",
       "playlistExhaust": false,
       "playlistIds": [],
+      "playlistInOrder": false,
       "playlistStrict": false,
+      "preparationSkill": "",
       "programme": false,
       "segmentSkill": "",
       "tags": [],
@@ -1312,6 +1435,19 @@
     "opusBitrate": 96,
     "opusEnabled": false
   },
+  "tagger": {
+    "auto": {
+      "limit": 0,
+      "mode": "off",
+      "steps": {
+        "analyze": true,
+        "enrich": true,
+        "reconcile": true,
+        "tagMoods": true
+      },
+      "time": "02:30"
+    }
+  },
   "theme": {
     "active": "classic-light"
   },
@@ -1325,7 +1461,9 @@
       "sweep": true,
       "washout": true
     },
+    "equalPowerCrossfade": false,
     "pairDrain": true,
+    "pickTimeStems": false,
     "stemBlends": false
   },
   "tts": {
@@ -1362,10 +1500,17 @@
     "gainDb": {
       "chatterbox": 0,
       "cloud": 0,
+      "gemini": 0,
       "kokoro": 0,
       "piper": 0,
       "pocket-tts": 0,
       "remote": 0
+    },
+    "gemini": {
+      "libraryLanguage": "",
+      "model": "",
+      "pronunciation": "",
+      "voice": "Puck"
     },
     "heavyEnabled": false,
     "kokoro": {
@@ -1381,11 +1526,13 @@
     "speed": {
       "chatterbox": 1,
       "cloud": 1,
+      "gemini": 1,
       "kokoro": 1,
       "piper": 1,
       "pocket-tts": 1,
       "remote": 1
-    }
+    },
+    "voiceLevelling": false
   },
   "ui": {
     "boothBuddy": false,

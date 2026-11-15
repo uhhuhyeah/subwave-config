@@ -143,6 +143,18 @@ else
       sample=$(printf '%s\n' "$tail" | grep -iE '\[error\]|connection refused|permission denied|failed to connect' | head -1 | cut -c1-100)
       echo "R|radiolog|warn|${errs} error-shaped line(s) in last 200|${sample}"
     else echo "R|radiolog|ok|no recent errors"; fi
+    # Music source: when Navidrome hands back JSON error bodies instead of audio
+    # (e.g. its library mount went missing), Liquidsoap loops /sounds/emergency.mp3
+    # while Icecast, the API and the stream all still look healthy. That ran for
+    # ~12h unseen on 2026-11-15. Fail if a bad-source line comes after the last
+    # "music source recovered".
+    bad_re='music source returned an ERROR BODY|Decoding "/sounds/emergency\.mp3"'
+    last_bad=$(printf '%s\n' "$tail" | grep -nE "$bad_re" | tail -1 | cut -d: -f1)
+    last_ok=$(printf '%s\n' "$tail" | grep -n 'music source recovered' | tail -1 | cut -d: -f1)
+    if [ -n "$last_bad" ] && [ "$last_bad" -gt "${last_ok:-0}" ]; then
+      nbad=$(printf '%s\n' "$tail" | grep -cE "$bad_re" || true)
+      echo "R|source|fail|on emergency fallback — ${nbad} bad-source line(s) in last 200|Navidrome is returning errors, not audio: check its library mount (pct exec 106 -- ls /mnt/music) and pve01's NFS mounts (systemctl --failed)"
+    else echo "R|source|ok|playing from the music source"; fi
   fi
 fi
 REMOTE_EOF
@@ -262,6 +274,7 @@ fi
 section "Logs"
 if [ "$ssh_ok" = 0 ]; then finding skip "radio.log" "host unreachable"; else
   while IFS='|' read -r _ _ st detail hint; do finding "$st" "radio.log tail" "$detail" "$hint"; done < <(printf '%s\n' "$REMOTE" | grep '^R|radiolog|')
+  while IFS='|' read -r _ _ st detail hint; do finding "$st" "music source" "$detail" "$hint"; done < <(printf '%s\n' "$REMOTE" | grep '^R|source|')
 fi
 
 # --- summary --------------------------------------------------------------

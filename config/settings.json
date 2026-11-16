@@ -1532,7 +1532,7 @@
       "pocket-tts": 1,
       "remote": 1
     },
-    "voiceLevelling": false
+    "voiceLevelling": true
   },
   "ui": {
     "boothBuddy": false,
